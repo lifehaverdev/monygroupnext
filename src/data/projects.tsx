@@ -105,14 +105,14 @@ const projects: Project[] = [
       merkleLeavesPath: [''],
       chainId: 1,
       ethereumPrice: 0.01,
-      href: '#',
-      imageSrc: '/images/macci.png',
+      href: "#m-cult",//<ContractLink contract={{id: "", name: "m-cult"}}/>,
+      imageSrc: '/images/collections/m-cult/0.png',
       imageAlt: 'SHFHSLKFJS',
       images: [
         {
           id: 1,
           name: 'Main view',
-          src: '/images/macci.png',
+          src: '/images/collections/m-cult/0.png',
           alt: 'Main promotional image of M-CULT.',
         },
         // More images...

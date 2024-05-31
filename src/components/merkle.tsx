@@ -20,7 +20,7 @@ async function fetchMerkleLeaves(projectName:string) {
     const client = await connectToDatabase();
     const collection = client.db(dbName).collection(collectionName);
     const documents = await collection.find({}).toArray();
-    console.log(documents)
+    //console.log(documents)
     // Find the document with the matching projectName
     const document = documents[0]
 
