@@ -1,48 +1,6 @@
-import Link from 'next/link';
-
-interface Contract {
-    id: string;
-    name: string;
-  }
-  
-  interface ContractLinkProps {
-    contract: Contract;
-  }
-  
-  interface ContractsListProps {
-    contracts: Contract[];
-  }
-
-  const ContractLink: React.FC<ContractLinkProps> = ({ contract }) => (
-    <Link href={`/mint/${contract.id}`}>
-      {contract.name}
-    </Link>
-  );
-
-const products = [
-    {
-      id: 1,
-      name: 'Tubbystation',
-      color: 'Natural',
-      price: '$75',
-      href: <ContractLink contract={{id: "0x8Dddc7710A40e138d0b6b637e84114494280d69f", name: "tubbystation"}}/>,
-      imageSrc: 'tubbystation.png',
-      imageAlt: 'Hand stitched, orange leather long wallet.',
-    },
-    {
-        id:2,
-        name: 'M-CULT',
-        color: 'Non-Natural',
-        price: '$80',
-        href: '#',
-        imageSrc: 'images/macci.jpg',
-        imageAlt: 'SHFHSLKFJS'
-    }
-    // More products...
-  ];
-
-
-
+//import Link from 'next/link';
+import Image from 'next/image';
+import projects from '../../data/projects'
   
   export default function CollectionsDisplay() {
     return (
@@ -53,33 +11,23 @@ const products = [
           </div>
   
           <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-            {products.map((product) => (
-              <div key={product.id} className="group relative">
+            {projects.map((project) => (
+              <div key={project.id} className="group relative">
                 <div className="h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
-                  <img
-                    src={product.imageSrc}
-                    alt={product.imageAlt}
+                  <Image
+                    width={512}
+                    height={512}
+                    src={project.imageSrc}
+                    alt={project.imageAlt}
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
                 <h3 className="mt-4 text-sm text-gray-700">
-                  {/* <a href={product.href}>
-                    <span className="absolute inset-0" />
-                    {product.name}
-                  </a> */}
-                  {product.href}
+                  {project.href}
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                <p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
+                <p className="mt-1 text-sm font-medium text-gray-900">{project.ethereumPrice}</p>
               </div>
             ))}
-          </div>
-  
-          <div className="mt-8 text-sm md:hidden">
-            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-              Shop the collection
-              <span aria-hidden="true"> &rarr;</span>
-            </a>
           </div>
         </div>
       </div>

@@ -136,7 +136,7 @@ function tubbystation() {
         <Exhibit
             title='TubbyStation MINTING NOW'
             headline='Final MONY First Gen release'
-            imageUrl='/tubbystation.png'
+            imageUrl='/images/collections/tubbystation/1.png'
             secondary={[
                 {
                     name: 'website',

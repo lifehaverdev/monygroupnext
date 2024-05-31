@@ -1,4 +1,5 @@
 'use client'
+
 import '@rainbow-me/rainbowkit/styles.css';
 import {
   RainbowKitProvider,
@@ -8,16 +9,18 @@ import {
   QueryClientProvider,
   QueryClient,
 } from "@tanstack/react-query";
+import { useEffect } from 'react'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { config } from '../_config';
 import Header from '../../../components/header'
-import Card from './card'
-import Recents from './recentMints'
 
 const queryClient = new QueryClient();
-   
-  export default function Page({ params }: { params: { id: string } }) {
-    const { id } = params
+
+export default function ProjectLayout({
+    children,
+  }: {
+    children: React.ReactNode
+  }) {
     return (
         <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
@@ -31,12 +34,9 @@ const queryClient = new QueryClient();
                     rightElement = {<ConnectButton/>}
                 />
                 {/* <ConnectButton /> */}
-                <Card/>
-                <Recents/>
+                {children}
             </RainbowKitProvider>
         </QueryClientProvider>
         </WagmiProvider>
-
-
     )
   }

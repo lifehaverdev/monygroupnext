@@ -41,7 +41,9 @@ const config: Config = {
     }
   },
   plugins: [
-    myPlugin
+    myPlugin,
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
   ],
 };
 export default config;

@@ -28,7 +28,6 @@ const MintPage = () => {
                 ]}
                 rightElement = {<ConnectButton/>}
             />
-            {/* <ConnectButton /> */}
             <CollectionsDisplay />
         </RainbowKitProvider>
       </QueryClientProvider>
