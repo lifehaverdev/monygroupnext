@@ -4,15 +4,16 @@ const nextConfig = {
       BASE_URL: process.env.PINATA_APPEND,
     },
     images: {
-        remotePatterns: [
-          {
-            protocol: 'https',
-            hostname: 'mony.mypinata.cloud',
-            port: '',
-            pathname: '/ipfs/**',
-          },
-        ],
-      },
+      domains: 'mony.mypinata.cloud',
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'mony.mypinata.cloud',
+          port: '',
+          pathname: '/ipfs/**',
+        },
+      ],
+    },
   }
 
 export default nextConfig;
