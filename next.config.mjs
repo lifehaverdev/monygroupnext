@@ -4,7 +4,7 @@ const nextConfig = {
       BASE_URL: process.env.PINATA_APPEND,
     },
     images: {
-      domains: 'mony.mypinata.cloud',
+      domains: ['mony.mypinata.cloud','monygroup.net'],
       remotePatterns: [
         {
           protocol: 'https',
