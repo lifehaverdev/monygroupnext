@@ -8,13 +8,14 @@ const allowedOrigin = process.env.NEXT_PUBLIC_ALLOWED_ORIGIN || 'http://localhos
 
 export async function GET(req: NextRequest) {
   const tokenImageUri = req.nextUrl.searchParams.get('tokenImageUri')
-  const referer = req.headers.get('referer');
 
-  if (!referer || !referer.startsWith(allowedOrigin)) {
-    return new Response('Forbidden', {
-      status: 403
-    })
-  }
+
+  //const referer = req.headers.get('referer');
+  // if (!referer || !referer.startsWith(allowedOrigin)) {
+  //   return new Response('Forbidden', {
+  //     status: 403
+  //   })
+  // }
 
   if (!tokenImageUri) {
     return new Response('Missing tokenImageUri!!!', {
