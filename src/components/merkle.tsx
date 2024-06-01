@@ -17,7 +17,9 @@ async function fetchMerkleLeaves(projectName:string) {
   const dbName = 'Merkles';
   const collectionName = projectName;
   try {
+    console.log('connecting to atlas...')
     const client = await connectToDatabase();
+    console.log('we are in?')
     const collection = client.db(dbName).collection(collectionName);
     const documents = await collection.find({}).toArray();
     //console.log(documents)
