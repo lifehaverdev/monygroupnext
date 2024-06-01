@@ -36,7 +36,7 @@ async function fetchMerkleLeaves(projectName:string) {
       return null;
     }
 
-    //console.log('Leaves:', leaves.length);
+    console.log('Leaves:', leaves.length);
     return leaves;
   } catch (error) {
     return null;
