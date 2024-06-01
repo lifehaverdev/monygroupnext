@@ -51,5 +51,6 @@ export async function GET(req: NextRequest) {
 
 // Exporting POST handler that returns 405 Method Not Allowed
 export async function POST(req: NextRequest, res: NextApiResponse) {
+  console.log('this request',req)
   res.status(405).json({ error: 'Method Not Allowed' });
 }

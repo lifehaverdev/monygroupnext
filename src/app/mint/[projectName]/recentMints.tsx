@@ -13,6 +13,7 @@ import { getMeta, uriToUrl } from '@/components/ipfs'
   }
 
   const Recents: FC<RecentsProps> = ({ projectName, supply, contract }) => {
+    console.log('where are the recent mints')
   const [products, setProducts] = useState<any[]>([]);
   const total = smol('totalSupply',supply);
   let contracts = []
@@ -46,6 +47,7 @@ import { getMeta, uriToUrl } from '@/components/ipfs'
           const owner = result[i + 1];
           if (tokenUri.status == 'success' && typeof tokenUri.result == 'string') {
             const metadata = await getMeta(tokenUri.result);
+            console.log('metadata',metadata)
             last6Tokens.push({
               id: end - i / 2,
               name: metadata.name,
