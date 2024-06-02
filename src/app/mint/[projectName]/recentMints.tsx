@@ -87,6 +87,7 @@ import { getMeta, uriToUrl } from '@/components/ipfs'
                     width={512}
                     height={512}
                     className="h-full w-full object-cover object-center"
+                    unoptimized
                   />
                 </div>
                 <h3>{product.number}</h3>
