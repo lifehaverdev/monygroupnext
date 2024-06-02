@@ -243,6 +243,7 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
                             {detail.items.map((item) => (
                               <li key={item}>{item}</li>
                             ))}
+                            <li key='contract'><a href={`https://etherscan.io/address/${project.ca}#code`}>{project.ca.slice(0,10)}...</a></li>
                           </ul>
                         </Disclosure.Panel>
                       </>

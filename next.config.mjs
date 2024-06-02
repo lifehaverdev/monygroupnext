@@ -12,6 +12,12 @@ const nextConfig = {
           port: '',
           pathname: '/ipfs/**',
         },
+        {
+          protocol: 'https',
+          hostname: 'monygroup.net',
+          port: '',
+          pathname: '/api/image/**',
+        }
       ],
     },
   }
