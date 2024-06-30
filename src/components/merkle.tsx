@@ -60,7 +60,7 @@ export async function verifyAddressInMerkleTree({projectName, address}:MerklePro
       const merkleTree = new MerkleTree(leaves, keccak256, { sortPairs: true });
       const leaf = keccak256(address.slice(2) as `0x${string}`);
       const proof = merkleTree.getHexProof(leaf);
-      //console.log(merkleTree.getHexRoot())
+      console.log(merkleTree.getHexRoot())
       return proof;
       } else {
         return false;
