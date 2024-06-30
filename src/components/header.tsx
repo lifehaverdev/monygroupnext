@@ -19,7 +19,7 @@ export default function Header({ navigation, rightElement }: HeaderProps) {
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Mony Group</span>
-            <img className="h-8 w-auto" src="/monybox.svg" alt="" />
+            <Image className="h-8 w-auto" src="/monybox.svg" alt="Mony Group" width={32} height={32} />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -53,11 +53,7 @@ export default function Header({ navigation, rightElement }: HeaderProps) {
           <div className="flex items-center justify-between">
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Mony Group</span>
-              <img
-                className="h-8 w-auto"
-                src="monybox.svg"
-                alt=""
-              />
+              <Image className="h-8 w-auto" src="/monybox.svg" alt="Mony Group" width={32} height={32} />
             </a>
             <button
               type="button"
