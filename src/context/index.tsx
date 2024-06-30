@@ -9,10 +9,32 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { State, WagmiProvider } from 'wagmi'
 
+import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+import {
+  rainbowWallet,
+  walletConnectWallet,
+  rabbyWallet,
+  metaMaskWallet
+} from '@rainbow-me/rainbowkit/wallets';
+
+export const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Recommended',
+      wallets: [rabbyWallet, rainbowWallet, walletConnectWallet, metaMaskWallet],
+    },
+  ],
+  {
+    appName: 'Mony Mint',
+    projectId
+  }
+);
+
 // Setup queryClient
 const queryClient = new QueryClient()
 
 if (!projectId) throw new Error('Project ID is not defined')
+
 
 // Create modal
 createWeb3Modal({

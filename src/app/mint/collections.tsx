@@ -25,7 +25,7 @@ import projects from '../../data/projects'
                 <h3 className="mt-4 text-sm text-gray-700">
                   {project.href}
                 </h3>
-                <p className="mt-1 text-sm font-medium text-gray-900">{project.ethereumPrice}</p>
+                <p className="mt-1 text-sm font-medium text-gray-900">{project.ethereumPrice}E</p>
               </div>
             ))}
           </div>

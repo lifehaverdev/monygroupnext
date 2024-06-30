@@ -1,7 +1,3 @@
-
-// import {
-//     getDefaultConfig
-//   } from '@rainbow-me/rainbowkit';
 import { http } from 'viem';
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 
@@ -15,6 +11,7 @@ optimism,
 arbitrum,
 base,
 } from 'wagmi/chains';
+
 
 // Your WalletConnect Cloud project ID
 export const projectId = '815947931436f8a2b677d1d27dc02ec2'
@@ -37,8 +34,10 @@ export const config = defaultWagmiConfig({
   storage: createStorage({
     storage: cookieStorage
   }),
+  // connectors: createConnector(),
   transports: {
     [mainnet.id]: http('https://eth-mainnet.g.alchemy.com/v2/umImd99xY47XFAHi4JpUPqCLjUQV_jgc'),
     //[base.id]: http('https://eth-sepolia.g.alchemy.com/v2/...'),
   },
+  enableInjected: true
 })

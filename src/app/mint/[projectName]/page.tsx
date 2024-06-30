@@ -38,7 +38,9 @@ export default function Page() {
   useEffect(() => {
     if (address && projectName) {
       verifyAddressInMerkleTree({projectName, address}).then(proof => {
+        console.log('proof',proof)
         if (proof && proof.length > 0) {
+
           setProof(proof);
         }
       });

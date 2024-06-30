@@ -189,7 +189,7 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
 
             <div className="mt-3">
               <h2 className="sr-only">Project Description</h2>
-              <p className="text-3xl tracking-tight text-gray-900">{project.ethereumPrice}</p>
+              <p className="text-3xl tracking-tight text-gray-900">{project.ethereumPrice}E</p>
             </div>
 
             <div className="mt-6">
