@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 require('dotenv').config(); // Ensure this line is present to load environment variables from .env.local
 
-const uri = process.env.MONGO_URI
+const uri = process.env.MONGODB_URI
 
 if (!uri) {
   throw new Error('Please define the MONGO_URI environment variable inside .env.local');
