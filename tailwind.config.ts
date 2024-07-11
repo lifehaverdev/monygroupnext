@@ -33,6 +33,9 @@ const config: Config = {
         lg: '0 8px 16px var(--tw-shadow-color)',
         white: '0 0px 5px rgba(255, 255, 255, 0.9)',
       },
+      colors: {
+        'custom-blue': '#5773FF', // Add your custom color here
+      },
     },
   },
   variants: {

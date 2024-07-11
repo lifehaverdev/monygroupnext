@@ -80,7 +80,7 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
     const free = ( typeof freeMinted == 'boolean' && proof.length > 0 && !freeMinted)
     const amountSelector = 
         <>
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose quantity:</label>
+        <label className={`block mb-2 text-sm font-medium ${project?.colors.disclosureButtonTextColor} dark:text-white`}>Choose quantity:</label>
             <div className="relative flex items-center max-w-[11rem]">
                 <button onClick={() => {setAmount(amount - 1)}} disabled={amount==0}
                 type="button" id="decrement-button" data-input-counter-decrement="bottles-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
@@ -99,12 +99,12 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
                 disabled={smol('totalSupply',supply) + amount == 365}
 
                 type="button" id="increment-button" data-input-counter-increment="bottles-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <svg className={`w-3 h-3 ${project?.colors.secondaryTextColor} dark:text-white`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
                     </svg>
                 </button>
             </div>
-            <p id="helper-text-explanation" className="mt-2 text-sm text-gray-500 dark:text-gray-400">Please select amount</p>
+            <p id="helper-text-explanation" className={`mt-2 text-sm ${project?.colors.secondaryTextColor} dark:text-gray-400`}>Please select amount</p>
             </>
       return (
         <>
@@ -112,9 +112,9 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
         <div className="mt-10 flex">
           <button
             type="submit"
-            className={`flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full 
+            className={`flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white ${project?.colors.buttonHoverBackgroundColor} focus:outline-none focus:ring-2 ${project?.colors.buttonFocusRingColor} focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full 
             ${isPending ? 'opacity-50 cursor-not-allowed': 
-            isSuccess ? 'bg-green-400' : 'bg-indigo-600'}`}
+            isSuccess ? project?.colors.buttonSuccessBackgroundColor : project?.colors.buttonBackgroundColor}`}
           >
             {free ? 'Free Mint' : 'Mint'}
           </button>
@@ -128,8 +128,19 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
     return <div><h1>Project not found</h1></div>;
   }
 
+  const styles = {
+    backgroundColor: project.colors.backgroundColor,//'#1e3a8a',
+    minHeight: '100vh',
+    //backgroundImage: "url('/path/to/your/image.jpg') !important",
+    //backgroundSize: 'cover !important',
+    //backgroundPosition: 'center !important',
+    //backgroundRepeat: 'no-repeat !important',
+    //backgroundAttachment: 'fixed !important',
+  };
+
   return (
-    <div className="bg-white">
+    // <div className="bg-white">
+    <div style={styles}>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {/* Image gallery */}
@@ -185,18 +196,18 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
 
           {/* project info */}
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">{project.name}</h1>
+            <h1 className={`text-3xl font-bold tracking-tight ${project.colors.primaryTextColor}`}>{project.name}</h1>
 
             <div className="mt-3">
               <h2 className="sr-only">Project Description</h2>
-              <p className="text-3xl tracking-tight text-gray-900">{project.ethereumPrice}E</p>
+              <p className={`text-3xl tracking-tight ${project.colors.primaryTextColor}`}>{project.ethereumPrice}E</p>
             </div>
 
             <div className="mt-6">
               <h3 className="sr-only">Description</h3>
 
               <div
-                className="space-y-6 text-base text-gray-700"
+                className={`space-y-6 text-base ${project.colors.descriptionTextColor}`}
                 dangerouslySetInnerHTML={{ __html: project.description }}
               />
             </div>
@@ -219,19 +230,19 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
                         <h3>
                           <Disclosure.Button className="group relative flex w-full items-center justify-between py-6 text-left">
                             <span
-                              className={classNames(open ? 'text-indigo-600' : 'text-gray-900', 'text-sm font-medium')}
+                              className={classNames(open ? project.colors.disclosureButtonOpenTextColor : project.colors.primaryTextColor, 'text-sm font-medium')}
                             >
                               {detail.name}
                             </span>
                             <span className="ml-6 flex items-center">
                               {open ? (
                                 <MinusIcon
-                                  className="block h-6 w-6 text-indigo-400 group-hover:text-indigo-500"
+                                  className={`block h-6 w-6 ${project.colors.disclosureButtonOpenIconColor}`}
                                   aria-hidden="true"
                                 />
                               ) : (
                                 <PlusIcon
-                                  className="block h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                                  className={`block h-6 w-6 ${project.colors.disclosureButtonIconColor}`}
                                   aria-hidden="true"
                                 />
                               )}

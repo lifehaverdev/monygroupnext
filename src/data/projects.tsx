@@ -94,7 +94,23 @@ const projects: Project[] = [
         },
         // More sections...
       ],
-      secondaryMarket: 'https://opensea.io/collection/tubbystation'
+      secondaryMarket: 'https://opensea.io/collection/tubbystation',
+      colors: {
+        backgroundColor: '#ffffff',//'#1e3a8a', // Hex color for background
+        primaryTextColor: 'text-gray-50', // Tailwind CSS class for primary text color
+        secondaryTextColor: 'text-gray-500 dark:text-gray-400', // Tailwind CSS class for secondary text color
+        buttonBackgroundColor: 'bg-custom-blue', // Tailwind CSS class for button background color
+        //#5773FF to match web3modal
+        buttonHoverBackgroundColor: 'hover:bg-indigo-700', // Tailwind CSS class for button hover background color
+        buttonSuccessBackgroundColor: 'bg-green-400', // Tailwind CSS class for button success background color
+        buttonFocusRingColor: 'focus:ring-indigo-500', // Tailwind CSS class for button focus ring color
+        descriptionTextColor: 'text-gray-700', // Tailwind CSS class for description text color
+        disclosureButtonTextColor: 'text-sm font-medium text-gray-900', // Tailwind CSS class for disclosure button text color
+        disclosureButtonOpenTextColor: 'text-indigo-600', // Tailwind CSS class for disclosure button text color when open
+        disclosureButtonIconColor: 'text-gray-400 group-hover:text-gray-500', // Tailwind CSS class for disclosure button icon color
+        disclosureButtonOpenIconColor: 'text-indigo-400 group-hover:text-indigo-500', // Tailwind CSS class for disclosure button icon color when open
+      },
+      backgroundImage: '/path/to/your/image.jpg', // Optional background image
     },
     {
       id: 2,
@@ -130,7 +146,22 @@ const projects: Project[] = [
           ],
         },
       ],
-      secondaryMarket: ""
+      secondaryMarket: "",
+      colors: {
+        backgroundColor: '#ffffff',//'#1e3a8a', // Hex color for background
+        primaryTextColor: 'text-gray-900', // Tailwind CSS class for primary text color
+        secondaryTextColor: 'text-gray-500 dark:text-gray-400', // Tailwind CSS class for secondary text color
+        buttonBackgroundColor: 'bg-indigo-600', // Tailwind CSS class for button background color
+        buttonHoverBackgroundColor: 'hover:bg-indigo-700', // Tailwind CSS class for button hover background color
+        buttonSuccessBackgroundColor: 'bg-green-400', // Tailwind CSS class for button success background color
+        buttonFocusRingColor: 'focus:ring-indigo-500', // Tailwind CSS class for button focus ring color
+        descriptionTextColor: 'text-gray-700', // Tailwind CSS class for description text color
+        disclosureButtonTextColor: 'text-sm font-medium text-gray-900', // Tailwind CSS class for disclosure button text color
+        disclosureButtonOpenTextColor: 'text-indigo-600', // Tailwind CSS class for disclosure button text color when open
+        disclosureButtonIconColor: 'text-gray-400 group-hover:text-gray-500', // Tailwind CSS class for disclosure button icon color
+        disclosureButtonOpenIconColor: 'text-indigo-400 group-hover:text-indigo-500', // Tailwind CSS class for disclosure button icon color when open
+      },
+      backgroundImage: '/path/to/your/image.jpg', // Optional background image
     }
     // More projects...
   ];

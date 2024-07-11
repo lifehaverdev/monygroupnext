@@ -22,6 +22,21 @@ export interface Project {
       name: string;
       items: string[];
     }>;
-    secondaryMarket: string
+    secondaryMarket: string,
+    colors: {
+      backgroundColor: string 
+      primaryTextColor: string
+      secondaryTextColor: string 
+      buttonBackgroundColor: string 
+      buttonHoverBackgroundColor: string 
+      buttonSuccessBackgroundColor: string 
+      buttonFocusRingColor: string 
+      descriptionTextColor: string 
+      disclosureButtonTextColor: string 
+      disclosureButtonOpenTextColor: string 
+      disclosureButtonIconColor: string 
+      disclosureButtonOpenIconColor: string 
+    },
+    backgroundImage: string
   }
   

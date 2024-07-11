@@ -64,14 +64,18 @@ export default function Page() {
       </div>
     )
   }
+
+  
   return (
     <>
+    
     <Card projectName={projectName as string} proof={proof} contract={contract} address={address} supply={supply as bigint}/>
     {
       isLoading ? 
       <p>Loading...</p> :
        <Recents projectName={projectName as string} supply={supply as bigint} contract={contract}/>
     }
+    
     </>
   )
 }
