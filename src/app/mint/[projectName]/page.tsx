@@ -10,6 +10,7 @@ import projects from '@/data/projects'
    
 export default function Page() {
   const [proof, setProof] = useState<string[]>([]);
+  const [proven, setProven] = useState<boolean>(false);
   const [totalSupply, setTotalSupply] = useState<bigint | undefined>(undefined);
   const { address } = useAccount();
   const pathName = usePathname();
@@ -71,6 +72,7 @@ export default function Page() {
 
           setProof(proof.proof);
         }
+        setProven(true);
       });
     }
   }, [address, projectName]);  // Re-run the effect if either the address or projectName changes
@@ -99,7 +101,7 @@ export default function Page() {
   return (
     <>
     
-    <Card projectName={projectName as string} proof={proof} contract={contract} address={address} supply={supply as bigint}/>
+    <Card proven={proven} projectName={projectName as string} proof={proof} contract={contract} address={address} supply={supply as bigint}/>
     {
       isLoading ? 
       <p>Loading...</p> :

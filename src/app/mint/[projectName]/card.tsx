@@ -14,6 +14,7 @@ function classNames(...classes:Array<string>) {
 }
 
 interface CardProps {
+  proven: boolean;
   projectName: string;
   proof: string[];
   contract: { address: `0x${string}` | undefined, abi: any, chainId: number | undefined};
@@ -21,7 +22,7 @@ interface CardProps {
   supply: BigInt | undefined;
 }
 
-const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) => {
+const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, supply }) => {
   'use client'
   const project = projects.find(p => p.name.toLowerCase() === projectName.toLowerCase());
   const [amount, setAmount] = useState(1);
@@ -115,10 +116,10 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
           <button
             type="submit"
             className={`flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white ${project?.colors.buttonHoverBackgroundColor} focus:outline-none focus:ring-2 ${project?.colors.buttonFocusRingColor} focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full 
-            ${isPending ? 'opacity-50 cursor-not-allowed': 
+            ${isPending||!proven ? 'opacity-50 cursor-not-allowed': 
             isSuccess ? project?.colors.buttonSuccessBackgroundColor : project?.colors.buttonBackgroundColor}`}
           >
-            {free ? 'Free Mint' : 'Mint'}
+            {proven ? free ? 'Free Mint' : 'Mint' : 'Checking Whitelist...'}
           </button>
         </div>
         <p>{isError ? `${error}` : ''}</p>
