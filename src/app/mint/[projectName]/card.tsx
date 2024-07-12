@@ -77,6 +77,8 @@ const Card: FC<CardProps> = ({ projectName, proof, contract, address, supply }) 
     //{projectName, proof, contract, address}:CardProps, freeMinted:any
   ) {
     'use client'
+    //console.log('free minted?' ,freeMinted)
+    //console.log('proof?', proof)
     const free = ( typeof freeMinted == 'boolean' && proof.length > 0 && !freeMinted)
     const amountSelector = 
         <>

@@ -3,7 +3,7 @@
 import Card from './card'
 import { usePathname } from 'next/navigation';
 import Recents from './recentMints'
-import {verifyAddressInMerkleTree} from '@/components/merkle';
+//import {verifyAddressInMerkleTree} from '@/components/merkle';
 import { useState, useEffect } from 'react';
 import { useAccount, useReadContract, type BaseError } from 'wagmi';
 import projects from '@/data/projects'
@@ -29,6 +29,8 @@ export default function Page() {
     functionName: 'totalSupply',
   });
 
+  
+
   useEffect(() => {
     if (supply) {
       setTotalSupply(supply as bigint);
@@ -36,16 +38,44 @@ export default function Page() {
   }, [supply]);
   
   useEffect(() => {
+    interface MintPageProps {
+      address: string;
+      projectName: string;
+    }
+    const verifyAddressInMerkleTree = async ({ projectName, address }:MintPageProps) => {
+      try {
+        const response = await fetch(`/api/whitelist?projectName=${projectName}&address=${address}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          //body: JSON.stringify({ projectName, address }),
+        });
+  
+        const data = await response.json();
+        //console.log(data);
+        if (!response.ok) {
+          throw new Error(data.error || 'Something went wrong');
+        }
+  
+        return data;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    };
     if (address && projectName) {
       verifyAddressInMerkleTree({projectName, address}).then(proof => {
-        console.log('proof',proof)
-        if (proof && proof.length > 0) {
+        //console.log(proof.proof)
+        if (proof.proof && proof.proof.length > 0) {
 
-          setProof(proof);
+          setProof(proof.proof);
         }
       });
     }
   }, [address, projectName]);  // Re-run the effect if either the address or projectName changes
+ 
+  
 
   if (isLoading) {
     return (

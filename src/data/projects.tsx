@@ -41,7 +41,14 @@ const projects: Project[] = [
         //mint
         {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},
         //ownerOf
-        {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
+        {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+        //error NoDice
+        {"inputs":[{"internalType":"string","name":"err","type":"string"}],"name":"NoDice","type":"error"},
+        //error TooMany
+        {"inputs":[{"internalType":"string","name":"err","type":"string"}],"name":"TooMany","type":"error"},
+        //error NotEnough
+        {"inputs":[],"name":"NoHandoverRequest","type":"error"},{"inputs":[{"internalType":"string","name":"err","type":"string"}],"name":"NotEnough","type":"error"},
+
       ] as const,
       merkRoot: ["0xa82fd3dc7e08baff1e045376cb6d6fd5d2ff1918f916de6c053c9deeb93b1840"],
       merkleLeavesPath: ['tubbystation.json'],
