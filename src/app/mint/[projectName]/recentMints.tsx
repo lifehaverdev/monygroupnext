@@ -4,7 +4,7 @@ import { FC } from 'react'
 import { useEffect, useState, useMemo } from 'react'
 import { useReadContracts } from 'wagmi'
 import { smol } from '@/Lib/bignumbers';
-import { getMeta, uriToUrl } from '@/components/ipfs'
+import { getMeta } from '@/components/ipfs';
 
   interface RecentsProps {
     projectName: string;
@@ -29,7 +29,7 @@ import { getMeta, uriToUrl } from '@/components/ipfs'
           args: [BigInt(total - i)],
         });
       }
-
+      
   const { data: result } = useReadContracts({
     contracts: contracts,
   });
@@ -42,20 +42,36 @@ import { getMeta, uriToUrl } from '@/components/ipfs'
       const end = Number(supply);
 
       if (result) {
+        //console.log(result)
         for (let i = 0; i < result.length; i += 2) {
           let tokenUri = result[i];
           const owner = result[i + 1];
           if (tokenUri.status == 'success' && typeof tokenUri.result == 'string') {
-            const metadata = await getMeta(tokenUri.result);
+            try {
+              //console.log(tokenUri.result)
+              const metadata = await getMeta(tokenUri.result);
             //console.log('metadata',metadata)
-            last6Tokens.push({
-              id: end - i / 2,
-              name: metadata.name,
-              number: metadata.number,
-              imageSrc: `/api/image/${projectName}/${metadata.number}?tokenImageUri=${metadata.image}`,
-              imageAlt: metadata.description,
-              owner: owner.result,
-            });
+            if (typeof metadata === 'object' && metadata !== null) {
+              last6Tokens.push({
+                id: end - i / 2,
+                name: metadata.name,
+                number: metadata.number,
+                imageSrc: `/api/image/${projectName}/${metadata.number}?tokenImageUri=${metadata.image}`,
+                imageAlt: metadata.description,
+                owner: owner.result,
+              });
+            } else if (typeof metadata === 'string') {
+              last6Tokens.push({
+                imageSrc: metadata,
+                imageAlt: 'unrevealed',
+                owner: owner.result
+              });
+            } 
+            } catch(err) {
+              console.log('metadata err',err)
+            }
+            
+            
           }
         }
         setProducts(last6Tokens);
@@ -66,11 +82,20 @@ import { getMeta, uriToUrl } from '@/components/ipfs'
 
   const project = projects.find(proj => proj.name.toLowerCase() === projectName.toLowerCase());
   
+  const styles = {
+    backgroundColor: project?.colors.backgroundColor,//'#1e3a8a',
+    //minHeight: '100vh',
+    //backgroundImage: "url('/path/to/your/image.jpg') !important",
+    //backgroundSize: 'cover !important',
+    //backgroundPosition: 'center !important',
+    //backgroundRepeat: 'no-repeat !important',
+    //backgroundAttachment: 'fixed !important',
+  };
     return (
-      <div className="bg-white">
+      <div style={styles}>
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="md:flex md:items-center md:justify-between">
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900">Recently Minted</h2>
+            <h2 className={`text-2xl font-bold tracking-tight ${project?.colors.primaryTextColor}`}>Recently Minted</h2>
             <a href={project?.secondaryMarket} className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
               See who minted
               <span aria-hidden="true"> &rarr;</span>

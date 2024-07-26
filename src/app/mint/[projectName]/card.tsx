@@ -119,7 +119,7 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
             ${isPending||!proven ? 'opacity-50 cursor-not-allowed': 
             isSuccess ? project?.colors.buttonSuccessBackgroundColor : project?.colors.buttonBackgroundColor}`}
           >
-            {proven ? free ? 'Free Mint' : 'Mint' : 'Checking Whitelist...'}
+            {proven ? free ? 'Free Mint' : 'Mint' : address ? 'Checking Whitelist...' : 'Connect your Wallet'}
           </button>
         </div>
         <p>{isError ? `${error}` : ''}</p>

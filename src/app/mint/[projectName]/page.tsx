@@ -3,7 +3,7 @@
 import Card from './card'
 import { usePathname } from 'next/navigation';
 import Recents from './recentMints'
-//import {verifyAddressInMerkleTree} from '@/components/merkle';
+///import {verifyAddressInMerkleTree} from '@/components/merkle';
 import { useState, useEffect } from 'react';
 import { useAccount, useReadContract, type BaseError } from 'wagmi';
 import projects from '@/data/projects'
@@ -44,19 +44,27 @@ export default function Page() {
       projectName: string;
     }
     const verifyAddressInMerkleTree = async ({ projectName, address }:MintPageProps) => {
+      console.log('project in verify address merkle tree',project)
+      if(!project.merkRoot || project.merkRoot.length == 0){
+        setProven(true)
+        return null
+      }
       try {
+        console.log('fetching')
         const response = await fetch(`/api/whitelist?projectName=${projectName}&address=${address}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          //body: JSON.stringify({ projectName, address }),
+          
         });
   
         const data = await response.json();
-        //console.log(data);
+        console.log(data);
         if (!response.ok) {
-          throw new Error(data.error || 'Something went wrong');
+          //throw new Error(data.error || 'Something went wrong');
+          console.log('bad response whitelist')
+          return null
         }
   
         return data;
@@ -67,15 +75,18 @@ export default function Page() {
     };
     if (address && projectName) {
       verifyAddressInMerkleTree({projectName, address}).then(proof => {
-        //console.log(proof.proof)
-        if (proof.proof && proof.proof.length > 0) {
-
+        
+        if (proof && proof.proof && proof.proof.length > 0) {
+          console.log(proof.proof)
           setProof(proof.proof);
+        } else {
+          console.log('no proof')
+          setProof([])
         }
         setProven(true);
       });
     }
-  }, [address, projectName]);  // Re-run the effect if either the address or projectName changes
+  }, [address, projectName, project.merklePath]);  // Re-run the effect if either the address or projectName changes
  
   
 

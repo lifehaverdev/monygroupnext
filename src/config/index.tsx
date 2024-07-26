@@ -35,9 +35,9 @@ export const config = defaultWagmiConfig({
     storage: cookieStorage
   }),
   // connectors: createConnector(),
-  transports: {
-    [mainnet.id]: http('https://eth-mainnet.g.alchemy.com/v2/umImd99xY47XFAHi4JpUPqCLjUQV_jgc'),
-    //[base.id]: http('https://eth-sepolia.g.alchemy.com/v2/...'),
-  },
+  // transports: {
+  //   [mainnet.id]: http('https://eth-mainnet.g.alchemy.com/v2/umImd99xY47XFAHi4JpUPqCLjUQV_jgc'),
+  //   //[base.id]: http('https://eth-sepolia.g.alchemy.com/v2/...'),
+  // },
   enableInjected: true
 })

@@ -10,12 +10,6 @@ export async function GET(req: NextRequest) {
   const tokenImageUri = req.nextUrl.searchParams.get('tokenImageUri')
 
   console.log('tokenImageUri',tokenImageUri)
-  //const referer = req.headers.get('referer');
-  // if (!referer || !referer.startsWith(allowedOrigin)) {
-  //   return new Response('Forbidden', {
-  //     status: 403
-  //   })
-  // }
 
   if (!tokenImageUri) {
     console.log('for some reason no work')

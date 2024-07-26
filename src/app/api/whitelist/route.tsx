@@ -14,8 +14,11 @@ async function fetchMerkleLeaves(projectName:string) {
   const dbName = 'Merkles';
   const collectionName = projectName;
   try {
+    console.log('connecting to database');
     const client = await connectToDatabase();
+    console.log('client',client)
     const collection = client.db(dbName).collection(collectionName);
+    console.log('collection',collection)
     const documents = await collection.find({}).toArray();
     const document = documents[0];
 
@@ -24,6 +27,7 @@ async function fetchMerkleLeaves(projectName:string) {
     }
 
     const leaves = document.leaves;
+    console.log('leaves',leaves[0],leaves[1],leaves[2])
     return leaves;
   } catch (error) {
     return null;
