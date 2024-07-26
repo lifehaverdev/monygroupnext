@@ -32,6 +32,15 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
     functionName: 'freeMinted',
     args: [address as `0x${string}`]
   })
+  const { data: salePrivate} = useReadContract({
+    ...contract,
+    functionName: 'salePrivate',
+  })
+  const { data: saleOn } = useReadContract({
+    ...contract,
+    functionName: 'saleOn'
+  })
+
   const { data:hash, isPending, isSuccess, error, isError, writeContract } = useWriteContract();
   useEffect(()=>{
     
@@ -52,6 +61,10 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
         })
     }
   }
+  let freeMintName = 'mintFree';
+  if(projectName == 'Tubbystation'){
+    freeMintName = 'freeMint';
+  }
   const freeMint = (proof:string[]) => {
     'use client'
     writeContract(
@@ -60,8 +73,26 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
         abi: contract.abi,
         chainId: contract.chainId,
         args: [proof],
-        functionName: 'freeMint'
+        functionName: freeMintName
       })
+  }
+
+  const wlMint = (amount:number, proof:string[]) => {
+    'use client'
+    if(project && project.ethereumPrice && salePrivate){
+      writeContract(
+        {
+          address: contract.address as `0x${string}`,
+          abi: contract.abi,
+          chainId: contract.chainId,
+          functionName: 'mintWhitelist',
+          args: [
+              BigInt(amount),
+              proof
+          ],
+          value: parseEther(JSON.stringify(project?.ethereumPrice * amount))
+        })
+    }
   }
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -69,6 +100,8 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
     e.preventDefault() 
     if(proof.length > 0 && !freeMinted){
       freeMint(proof);
+    } else if(proof.length > 0 && salePrivate && saleOn && freeMinted) {
+      wlMint(amount,proof);
     } else {
       mint(amount);
     }
@@ -116,10 +149,10 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
           <button
             type="submit"
             className={`flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white ${project?.colors.buttonHoverBackgroundColor} focus:outline-none focus:ring-2 ${project?.colors.buttonFocusRingColor} focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full 
-            ${isPending||!proven ? 'opacity-50 cursor-not-allowed': 
+            ${isPending||!proven||!saleOn ? 'opacity-50 cursor-not-allowed': 
             isSuccess ? project?.colors.buttonSuccessBackgroundColor : project?.colors.buttonBackgroundColor}`}
           >
-            {proven ? free ? 'Free Mint' : 'Mint' : address ? 'Checking Whitelist...' : 'Connect your Wallet'}
+            { saleOn ? proven ? free ? 'Free Mint' : 'Mint' : address ? 'Checking Whitelist...' : 'Connect your Wallet' : salePrivate && saleOn ? 'Whitelist Only' : 'Not Yet...'}
           </button>
         </div>
         <p>{isError ? `${error}` : ''}</p>
@@ -199,7 +232,7 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
 
           {/* project info */}
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-            <h1 className={`text-3xl font-bold tracking-tight ${project.colors.primaryTextColor}`}>{project.name}</h1>
+            <h1 className={`text-3xl font-bold tracking-tight ${project.colors.primaryTextColor}`}>{project.title}</h1>
 
             <div className="mt-3">
               <h2 className="sr-only">Project Description</h2>

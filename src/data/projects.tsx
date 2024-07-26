@@ -26,6 +26,7 @@ const projects: Project[] = [
     {
       id: 1,
       name: 'Tubbystation',
+      title: 'Tubbystation',
       ca: "0x8Dddc7710A40e138d0b6b637e84114494280d69f",
       abi: [
         //totalSupply
@@ -122,18 +123,23 @@ const projects: Project[] = [
     {
       id: 2,
       name: 'mcult',
-      ca: "0x101d2577ffAD6D981EC301215406EAa904EbDc8f",
+      title: 'M-Cult',
+      ca: "0x99C5765d7F3B181e8177448A77db6fD637B61F7C",
       abi: [
         //totalSupply
         {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
         //tokenURI
         {"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
-        //freeMint
-        {"inputs":[{"internalType":"bytes32[]","name":"proof","type":"bytes32[]"}],"name":"freeMint","outputs":[],"stateMutability":"nonpayable","type":"function"},
+        //mintFree
+        {"inputs":[{"internalType":"bytes32[]","name":"proof","type":"bytes32[]"}],"name":"mintFree","outputs":[],"stateMutability":"nonpayable","type":"function"},
         //freeMinted
         {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"freeMinted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
         //saleOn
         {"inputs":[],"name":"saleOn","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+        //salePrivate
+        {"inputs":[],"name":"salePrivate","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+        //mintWhitelist
+        {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"bytes32[]","name":"proof","type":"bytes32[]"}],"name":"mintWhitelist","outputs":[],"stateMutability":"payable","type":"function"},
         //mint
         {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},
         //ownerOf
@@ -146,31 +152,51 @@ const projects: Project[] = [
         {"inputs":[],"name":"NoHandoverRequest","type":"error"},{"inputs":[{"internalType":"string","name":"err","type":"string"}],"name":"NotEnough","type":"error"},
 
       ] as const,
-      merkRoot: [],
+      merkRoot: ['0x000000000000000000000000000000000000'],
       merkleLeavesPath: [],
       chainId: 11155111,
       ethereumPrice: 0.008,
-      href: "#m-cult",//<ContractLink contract={{id: "", name: "m-cult"}}/>,
-      imageSrc: '/images/collections/m-cult/0.png',
-      imageAlt: 'SHFHSLKFJS',
+      href: <ContractLink contract={{id: "0x99C5765d7F3B181e8177448A77db6fD637B61F7C", name: "mcult"}}/>,
+      imageSrc: '/images/collections/m-cult/655.jpg',
+      imageAlt: 'blue haired beautiful cult member',
       images: [
         {
           id: 1,
-          name: 'Main view',
-          src: '/images/collections/m-cult/0.png',
-          alt: 'Main promotional image of M-CULT.',
+          name: 'mcult member 1',
+          src: '/images/collections/m-cult/650.jpg',
+          alt: 'snow queen holy armor.',
         },
+        {
+          id: 2,
+          name: 'mcult member 2',
+          src: '/images/collections/m-cult/853.jpg',
+          alt: 'alt mcult'
+        },
+        {
+          id: 3,
+          name: 'mcult member 3',
+          src: '/images/collections/m-cult/200.jpg',
+          alt: 'alt mcult'
+        },
+        {
+          id: 4,
+          name: 'mcult member 5',
+          src: '/images/collections/m-cult/125.jpg',
+          alt: 'alt mcult'
+        }
         // More images...
       ],
       description: `
-        <p>Description of M-CULT</p>
+        <p>TEST RUN</p>
       `,
       details: [
         {
           name: 'Project Details',
           items: [
-            'Exclusive to M-CULT members',
-            'Limit 5 per wallet',
+            'Experimental Artist + AI NFT for M-CULT members',
+            'Free mint for Aikopic and Zora MAcci holders',
+            'Snapshot taken 24.7.19',
+            'Limit 15 per wallet',
             // Additional details...
           ],
         },

@@ -36,7 +36,7 @@ export async function getMeta(tokenUriResult:string) {
     }
     //console.log(tokenUriResult)
     const url = await uriToUrl(tokenUriResult as string)
-    //console.log(url)
+    console.log(url)
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');

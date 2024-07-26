@@ -62,6 +62,7 @@ import { getMeta } from '@/components/ipfs';
               });
             } else if (typeof metadata === 'string') {
               last6Tokens.push({
+                id: end - i / 2,
                 imageSrc: metadata,
                 imageAlt: 'unrevealed',
                 owner: owner.result

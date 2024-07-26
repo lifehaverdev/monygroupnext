@@ -86,7 +86,7 @@ export default function Page() {
         setProven(true);
       });
     }
-  }, [address, projectName, project.merklePath]);  // Re-run the effect if either the address or projectName changes
+  }, [address, project, projectName, project.merklePath]);  // Re-run the effect if either the address or projectName changes
  
   
 

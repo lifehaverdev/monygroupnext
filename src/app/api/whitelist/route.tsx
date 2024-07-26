@@ -16,9 +16,9 @@ async function fetchMerkleLeaves(projectName:string) {
   try {
     console.log('connecting to database');
     const client = await connectToDatabase();
-    console.log('client',client)
+    //console.log('client',client)
     const collection = client.db(dbName).collection(collectionName);
-    console.log('collection',collection)
+    //console.log('collection',collection)
     const documents = await collection.find({}).toArray();
     const document = documents[0];
 
@@ -37,7 +37,7 @@ async function fetchMerkleLeaves(projectName:string) {
 async function verifyAddressInMerkleTree(projectName: string, address:string) {
   try {
     const project = projects.find((p) => p.name.toLowerCase() === projectName);
-    if (!project || !project.merkleLeavesPath || project.merkleLeavesPath.length === 0) {
+    if (!project) {
       return false;
     }
 
@@ -53,7 +53,7 @@ async function verifyAddressInMerkleTree(projectName: string, address:string) {
     // const proof = merkleTree.getHexProof(leaf);
     const hashedLeaves = leaves.map((addr: string) => web3.utils.soliditySha3(addr));
     const merkleTree = new MerkleTree(hashedLeaves, web3.utils.soliditySha3, { sort: true });
-    //console.log('root', merkleTree.getHexRoot());
+    console.log('root', merkleTree.getHexRoot());
 
     const leaf = web3.utils.soliditySha3(address);
     let proof: Array<string> = [];

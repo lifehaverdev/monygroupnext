@@ -2,6 +2,7 @@
 export interface Project {
     id: number;
     name: string;
+    title: string;
     ca: string;
     abi: any;
     merkRoot: string[];
