@@ -203,7 +203,7 @@ const projects: Project[] = [
           ],
         },
       ],
-      secondaryMarket: "",
+      secondaryMarket: "https://opensea.io/collection/mcultnft",
       colors: {
         backgroundColor: '#ff1493', // Hex color for background
         primaryTextColor: 'text-white', // Tailwind CSS class for primary text color

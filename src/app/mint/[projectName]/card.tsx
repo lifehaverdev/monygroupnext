@@ -132,7 +132,7 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
                     />
                 <button 
                 onClick={() => {setAmount(amount + 1);}}
-                disabled={smol('totalSupply',supply) + amount == 365}
+                disabled={smol('totalSupply',supply) + amount == 365 || amount > 14}
 
                 type="button" id="increment-button" data-input-counter-increment="bottles-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                     <svg className={`w-3 h-3 ${project?.colors.secondaryTextColor} dark:text-white`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
