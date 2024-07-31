@@ -12,7 +12,7 @@ export default function Page() {
   const [proof, setProof] = useState<string[]>([]);
   const [proven, setProven] = useState<boolean>(false);
   const [totalSupply, setTotalSupply] = useState<bigint | undefined>(undefined);
-  const { address } = useAccount();
+  const { address, chain } = useAccount();
   const pathName = usePathname();
   const projectName = pathName.slice(6);  // `id` is now extracted from the URL
   const project:any = projects.find(proj => proj.name.toLowerCase() === projectName.toLowerCase());
@@ -44,7 +44,7 @@ export default function Page() {
       projectName: string;
     }
     const verifyAddressInMerkleTree = async ({ projectName, address }:MintPageProps) => {
-      console.log('project in verify address merkle tree',project)
+      //console.log('project in verify address merkle tree',project)
       if(!project.merkRoot || project.merkRoot.length == 0){
         setProven(true)
         return null
@@ -86,7 +86,11 @@ export default function Page() {
         setProven(true);
       });
     }
-  }, [address, project, projectName, project.merklePath]);  // Re-run the effect if either the address or projectName changes
+    if(address && chain && chain.id != project.chainId){
+      console.log(chain.id, project.chainId)
+      alert('Please switch your chain to Base')
+    }
+  }, [address, project, projectName, project.merklePath, chain]);  // Re-run the effect if either the address or projectName changes
  
   
 

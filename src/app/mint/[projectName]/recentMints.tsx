@@ -48,9 +48,9 @@ import { getMeta } from '@/components/ipfs';
           const owner = result[i + 1];
           if (tokenUri.status == 'success' && typeof tokenUri.result == 'string') {
             try {
-              console.log(tokenUri.result)
+              //console.log(tokenUri.result)
               const metadata = await getMeta(tokenUri.result);
-            console.log('metadata',metadata)
+            //console.log('metadata',metadata)
             if (typeof metadata === 'object' && metadata !== null) {
               last6Tokens.push({
                 id: end - i / 2,
