@@ -117,7 +117,7 @@ import { getMeta } from '@/components/ipfs';
                   />
                 </div>
                 <h3>{product.number}</h3>
-                <h3>{product.owner.slice(0,10)}...</h3>
+                <h3>{product.owner ? product.owner.slice(0,10) : null}...</h3>
               </div>
             ))}
           </div>

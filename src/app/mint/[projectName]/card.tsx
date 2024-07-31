@@ -291,7 +291,7 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
                             {detail.items.map((item) => (
                               <li className={`${project.colors.primaryTextColor}`}key={item}>{item}</li>
                             ))}
-                            <li key='contract'><a href={`${project.chainscan+project.ca+'#code'}${project.ca}#code`}>{project.ca.slice(0,10)}...</a></li>
+                            <li key='contract'><a href={`${project.chainscan+project.ca+'#code'}${project.ca}#code`}>{project?.ca.slice(0,10)}...</a></li>
                           </ul>
                         </Disclosure.Panel>
                       </>
