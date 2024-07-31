@@ -4,6 +4,7 @@ export interface Project {
     name: string;
     title: string;
     ca: string;
+    chainscan: string;
     abi: any;
     merkRoot: string[];
     merkleLeavesPath: string[];

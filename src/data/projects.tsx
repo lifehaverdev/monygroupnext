@@ -28,6 +28,7 @@ const projects: Project[] = [
       name: 'Tubbystation',
       title: 'Tubbystation',
       ca: "0x8Dddc7710A40e138d0b6b637e84114494280d69f",
+      chainscan: "https://etherscan.io/address/",
       abi: [
         //totalSupply
         {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
@@ -124,7 +125,8 @@ const projects: Project[] = [
       id: 2,
       name: 'mcult',
       title: 'M-Cult',
-      ca: "0x99C5765d7F3B181e8177448A77db6fD637B61F7C",
+      ca: "0xa015F00D9782CEBb49E9a459b780adCD4E637b6E",
+      chainscan: "https://basescan.org/address/",
       abi: [
         //totalSupply
         {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
@@ -154,9 +156,9 @@ const projects: Project[] = [
       ] as const,
       merkRoot: ['0x000000000000000000000000000000000000'],
       merkleLeavesPath: [],
-      chainId: 11155111,
+      chainId: 8453,
       ethereumPrice: 0.008,
-      href: <ContractLink contract={{id: "0x99C5765d7F3B181e8177448A77db6fD637B61F7C", name: "mcult"}}/>,
+      href: <ContractLink contract={{id: "0xa015F00D9782CEBb49E9a459b780adCD4E637b6E", name: "mcult"}}/>,
       imageSrc: '/images/collections/m-cult/655.jpg',
       imageAlt: 'blue haired beautiful cult member',
       images: [
@@ -187,7 +189,7 @@ const projects: Project[] = [
         // More images...
       ],
       description: `
-        <p>TEST RUN</p>
+        MCULT NFT is a collaboration between macci and stationthisbot to AI Generate an NFT collection based on her hand drawn honorary pfps. Each cult member was created entirely from scratch by the stationthisbot COLLECTION MODE using prompts dictated by metadata traits and a custom trained LoRa.
       `,
       details: [
         {

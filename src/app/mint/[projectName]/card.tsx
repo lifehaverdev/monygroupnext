@@ -155,7 +155,7 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
             { saleOn ? proven ? free ? 'Free Mint' : 'Mint' : address ? 'Checking Whitelist...' : 'Connect your Wallet' : salePrivate && saleOn ? 'Whitelist Only' : 'Not Yet...'}
           </button>
         </div>
-        <p>{isError ? `${error}` : ''}</p>
+        <p className="w-100 h-100 overflow-y-auto">{isError ? `${error}` : ''}</p>
         </>
       )
   }
@@ -244,8 +244,9 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
 
               <div
                 className={`space-y-6 text-base ${project.colors.descriptionTextColor}`}
-                dangerouslySetInnerHTML={{ __html: project.description }}
+                //dangerouslySetInnerHTML={{ __html: project.description }}
               />
+              <p className={`${project.colors.primaryTextColor}`}>{project.description}</p>
             </div>
             <form 
               className="mt-6"
@@ -288,9 +289,9 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
                         <Disclosure.Panel as="div" className="prose prose-sm pb-6">
                           <ul role="list">
                             {detail.items.map((item) => (
-                              <li key={item}>{item}</li>
+                              <li className={`${project.colors.primaryTextColor}`}key={item}>{item}</li>
                             ))}
-                            <li key='contract'><a href={`https://etherscan.io/address/${project.ca}#code`}>{project.ca.slice(0,10)}...</a></li>
+                            <li key='contract'><a href={`${project.chainscan+project.ca+'#code'}${project.ca}#code`}>{project.ca.slice(0,10)}...</a></li>
                           </ul>
                         </Disclosure.Panel>
                       </>
