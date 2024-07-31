@@ -43,7 +43,7 @@ import { getMeta } from '@/components/ipfs';
 
       if (result) {
         //console.log(result)
-        for (let i = 0; i < result.length; i += 2) {
+        for (let i = 1; i < result.length+1; i += 2) {
           let tokenUri = result[i];
           const owner = result[i + 1];
           if (tokenUri.status == 'success' && typeof tokenUri.result == 'string') {
