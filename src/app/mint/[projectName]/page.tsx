@@ -87,8 +87,13 @@ export default function Page() {
       });
     }
     if(address && chain && chain.id != project.chainId){
-      console.log(chain.id, project.chainId)
-      alert('Please switch your chain to Base')
+      //console.log(chain.id, project.chainId)
+      if(project.chainId == 8453){
+        alert('Please switch your chain to Base')
+      } else {
+        alert(`Please switch to chainId ${project.chainId}`)
+      }
+      
     }
   }, [address, project, projectName, project.merklePath, chain]);  // Re-run the effect if either the address or projectName changes
  
