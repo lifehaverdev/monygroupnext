@@ -43,14 +43,14 @@ import { getMeta } from '@/components/ipfs';
 
       if (result) {
         //console.log(result)
-        for (let i = 1; i < result.length+1; i += 2) {
+        for (let i = 0; i < result.length; i += 2) {
           let tokenUri = result[i];
           const owner = result[i + 1];
           if (tokenUri.status == 'success' && typeof tokenUri.result == 'string') {
             try {
-              //console.log(tokenUri.result)
+              console.log(tokenUri.result)
               const metadata = await getMeta(tokenUri.result);
-            //console.log('metadata',metadata)
+            console.log('metadata',metadata)
             if (typeof metadata === 'object' && metadata !== null) {
               last6Tokens.push({
                 id: end - i / 2,
