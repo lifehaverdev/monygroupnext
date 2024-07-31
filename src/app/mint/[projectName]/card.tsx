@@ -152,7 +152,7 @@ const Card: FC<CardProps> = ({ proven, projectName, proof, contract, address, su
             ${isPending||!proven||!saleOn ? 'opacity-50 cursor-not-allowed': 
             isSuccess ? project?.colors.buttonSuccessBackgroundColor : project?.colors.buttonBackgroundColor}`}
           >
-            { saleOn ? proven ? free ? 'Free Mint' : 'Mint' : address ? 'Checking Whitelist...' : 'Connect your Wallet' : salePrivate && saleOn ? 'Whitelist Only' : 'Not Yet...'}
+            { saleOn ? proven ? free ? 'Free Mint' : 'Mint' : address ? 'Checking Whitelist...' : 'Wallet Not Connected' : salePrivate && saleOn ? 'Whitelist Only' : 'Not Yet...'}
           </button>
         </div>
         <p className="w-100 h-100 overflow-y-auto">{isError ? `${error}` : ''}</p>
