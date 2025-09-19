@@ -1,0 +1,53 @@
+Three.js Scene Upgrade Prompt
+=============================
+
+Context
+-------
+Current `ThreeScene.tsx` shows a single low-poly blue diamond logo (box rotated 45°) with auto-rotate and basic lighting. Bundle kept lean via React Three Fiber and Drei.
+
+Objective
+---------
+Enrich the hero with additional low-poly PSX-style elements while staying <60 kB extra JS, keeping ≥95 Lighthouse score.
+
+Scene wishlist
+--------------
+1. **Floating room**  
+   • Add a simple cube room: 5 planes (floor, 3 walls, ceiling) with vertex colours to mimic flat-shaded PSX look.  
+   • Floor grid texture or geometry lines for depth.
+2. **Logo pedestal**  
+   • Keep the diamond logo, place it above a small pedestal or hover particle ring.
+3. **Subtle particles**  
+   • Procedural `Points` (100-200) slowly drifting; disable when `prefers-reduced-motion`.
+4. **Lighting**  
+   • Single directional light + low-intensity ambient; optionally fake volumetric light using transparent cone mesh.
+5. **Camera**  
+   • Fixed angled perspective; gentle auto-orbit (speed 0.3).  
+   • Clamp max DPR.
+
+Implementation tasks
+--------------------
+1. Update `ThreeScene.tsx`:  
+   • Build minimal `Room` component (use `useMemo` geometry reuse).  
+   • `Logo` component remains.  
+   • `Particles` component using `${@react-three/drei}`’s `Points` or custom buffer geometry.  
+   • Respect `prefers-reduced-motion` via `useEffect` media query.
+2. Performance guards  
+   • Keep geometry vertex count ≤2k.  
+   • Use `dispose={null}` to avoid memory leaks.  
+   • Ensure suspense + lazy load remain unchanged.
+3. Testing  
+   • Run `npm run analyze` to verify bundle impact.  
+   • Lighthouse after build ≥95.  
+   • Check mobile FPS (Chrome devtools) ≥55.
+
+Deliverables
+------------
+• Updated `ThreeScene.tsx` (+ any helper components).  
+• No extra NPM deps beyond already added three/fiber/drei.  
+• GIF demo attached to PR.
+
+Commit message example
+----------------------
+```
+feat(hero): enhance low-poly Three.js scene with room & particles
+```

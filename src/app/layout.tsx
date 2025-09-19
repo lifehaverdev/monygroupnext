@@ -2,6 +2,45 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import localFont from "next/font/local";
+import RouteProgress from "../components/RouteProgress";
+import InitialSplash from "../components/InitialSplash";
+// Critical above-the-fold CSS (≈2 kB) is inlined to eliminate the render-blocking request for globals.css.
+// It contains root color variables, font faces, and body font-family so that the first paint has correct styles.
+const criticalCss = `
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+/* Subset (Latin, wght 400–700) ~20 kB */
+@font-face {
+  font-family: "RedHatTextVar";
+  src: url("/fonts/subset/RedHatTextVarLatinSubsetBasic.woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-display: swap;
+}
+/* Full variable font deferred; will be injected after window load */
+@font-face {
+  font-family: "RemiliaMincho";
+  src: url("/fonts/RemiliaMincho-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+body {
+  font-family: "RedHatTextVar", var(--font-geist-sans), sans-serif;
+}
+`;
+
+// This tiny script ( <1 kB after minification ) converts Next.js' render-blocking
+// <link rel="stylesheet"> into a preload that swaps back to stylesheet onload,
+// following Lighthouse’s recommended pattern.
+const nonBlockingCssScript = `document.querySelectorAll('link[data-precedence="next"][rel="stylesheet"]').forEach(l=>{l.rel='preload';l.as='style';l.addEventListener('load',()=>l.rel='stylesheet');});`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +50,20 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Local fonts
+const redHat = localFont({
+  preload: true,
+  src: "../../public/fonts/subset/RedHatTextVarLatinSubsetBasic.woff2",
+  variable: "--font-redhat",
+  display: "swap",
+});
+
+const remilia = localFont({
+  src: "../../public/fonts/RemiliaMincho-Regular.otf",
+  variable: "--font-remilia",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,10 +78,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Inline critical CSS for first paint */}
+        <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
+        {/* Convert render-blocking stylesheet to non-blocking */}
+        <script dangerouslySetInnerHTML={{ __html: nonBlockingCssScript }} />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <header className="bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        className={`${geistSans.variable} ${geistMono.variable} ${redHat.variable} ${remilia.variable} antialiased flex flex-col min-h-screen`}
+        >
+        <InitialSplash />
+        <RouteProgress />
+        <header className="sticky top-0 z-20 bg-gray-100/90 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800">
           <nav className="container mx-auto flex gap-6 p-4 text-sm font-medium">
             <Link href="/">Home</Link>
             <Link href="/audits">Audits</Link>
@@ -36,11 +97,11 @@ export default function RootLayout({
             <Link href="/contact">Contact</Link>
           </nav>
         </header>
-        <main className="container mx-auto py-8 min-h-[calc(100vh-128px)]">
+        <main className="container mx-auto py-8 flex-1">
           {children}
         </main>
         <footer className="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 text-center p-4 text-xs text-gray-600 dark:text-gray-400">
-          © {new Date().getFullYear()} Mony Group
+          <span className="copyleft">&copy;</span> {new Date().getFullYear()} Mony Group
         </footer>
       </body>
     </html>

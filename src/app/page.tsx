@@ -1,103 +1,137 @@
-import Image from "next/image";
+import Link from "next/link";
+import ThreeHero from "../components/ThreeHero";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <section className="flex flex-col gap-24 py-16 sm:py-24">
+      {/* Three.js hero */}
+      <ThreeHero />
+      {/* Hero */}
+      <div className="text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-4" id="hero">
+        
+        <h1 className="text-4xl/tight sm:text-5xl font-semibold tracking-tight">
+          Build on the New Internet
+        </h1>
+        <p className="text-neutral-600 dark:text-neutral-300 text-base sm:text-lg leading-relaxed">
+          Solidity engineer and auditor. Creative Designer. Full-stack capable. Focused on original architecture, security, and clarity.
+        </p>
+        <div className="flex gap-4 flex-col sm:flex-row mt-4">
+          <Link
+            href="https://calendly.com/monygroup/call"
+            className="bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-md text-sm font-medium hover:opacity-80 transition"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Book a Call
+          </Link>
+          <Link
+            href="#projects"
+            className="border border-neutral-300 dark:border-neutral-700 px-6 py-3 rounded-md text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
           >
-            Read our docs
-          </a>
+            View Work
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+      
+      {/* About */}
+      <div className="max-w-3xl mx-auto px-4" id="about">
+        <h2 className="text-xl font-semibold mb-4">About</h2>
+        <p className="mb-2">
+          Solidity-first developer working on Ethereum since 2022.<br />
+          Focused on contract architecture, security, and frontend integration.<br />
+          Philosophy: Code as artifact. Immutable logic for decentralized systems.
+        </p>
+        <p className="text-sm text-neutral-500">Stack: Solidity, Foundry, React, Tailwind, IPFS</p>
+      </div>
+
+      {/* Services */}
+      <div className="max-w-5xl mx-auto px-4" id="services">
+        <h2 className="text-xl font-semibold mb-6">Services</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4">
+            <h3 className="font-medium mb-2">Smart Contract Auditing</h3>
+            <ul className="text-sm list-disc pl-4 space-y-1">
+              <li>Manual review and static analysis</li>
+              <li>Reports with annotations and recommendations</li>
+              <li>Foundry, Slither, fuzzing</li>
+            </ul>
+          </div>
+          <div className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4">
+            <h3 className="font-medium mb-2">Contract Engineering</h3>
+            <ul className="text-sm list-disc pl-4 space-y-1">
+              <li>Custom ERC20/721 logic</li>
+              <li>On-chain systems design</li>
+              <li>Royalty, liquidity, credit, or hybrid primitives</li>
+            </ul>
+          </div>
+          <div className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4">
+            <h3 className="font-medium mb-2">Frontend Integration</h3>
+            <ul className="text-sm list-disc pl-4 space-y-1">
+              <li>React + Tailwind dApps</li>
+              <li>On-chain interaction</li>
+              <li>IPFS or hosted deployment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Projects */}
+      <div className="max-w-5xl mx-auto px-4" id="projects">
+        <h2 className="text-xl font-semibold mb-6">Projects</h2>
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[
+            {
+              slug: "cult-executives",
+              title: "Cult Executives",
+              desc: "ERC721/ERC20 hybrid with automated liquidity royalty. Original architecture.",
+              tech: "Solidity, Viem, Foundry",
+            },
+            {
+              slug: "station-this-bot",
+              title: "StationThisBot",
+              desc: "AI access via on-chain credit + Telegram integration. Smart contract manages authorization and message routing.",
+              tech: "Solidity, Foundry, OpenAI",
+            },
+            {
+              slug: "station-series",
+              title: "Station Series",
+              desc: "MiladyStation (flagship), CigStation, TubbyStation — three-project NFT and minting series. Each audited and expandable.",
+              tech: "Solidity, React",
+            },
+          ].map((p) => (
+            <li key={p.slug} className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4 hover:border-black dark:hover:border-white transition">
+              <h3 className="font-medium text-lg leading-tight mb-1">{p.title}</h3>
+              <p className="text-sm mb-2">{p.desc}</p>
+              <p className="text-xs text-neutral-500 mb-3">{p.tech}</p>
+              <Link href={`/audits/${p.slug}`} className="underline text-sm">
+                View details →
+              </Link>
+              
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Contact */}
+      <div className="max-w-3xl mx-auto px-4 text-center" id="contact">
+        <h2 className="text-xl font-semibold mb-4">Contact</h2>
+        <p className="mb-4">Freelance smart contract work available.<br />Development, auditing, integration.</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link
+            href="https://calendly.com/monygroup/call"
+            className="bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-md text-sm font-medium hover:opacity-80 transition"
+          >
+            Book a Call
+          </Link>
+          <Link href="mailto:hello@mony.group" className="underline text-sm">
+            Email
+          </Link>
+          <Link href="https://app.ens.domains/name/mony.eth" className="underline text-sm">
+            ENS
+          </Link>
+          <Link href="https://t.me/monygroup" className="underline text-sm">
+            Telegram
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }

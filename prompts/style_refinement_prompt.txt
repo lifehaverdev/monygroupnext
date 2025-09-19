@@ -1,0 +1,61 @@
+UI Style Refinement Prompt
+==========================
+
+Project
+-------
+Next.js 14 app (`monygroupnext`) using TailwindCSS, local fonts (RedHatText / RemiliaMincho), tartan blur background utility, accent colour `#B71E34`, loader splash + nprogress bar, low-poly Three.js hero.
+
+Goal
+----
+Elevate typography, colour palette, spacing, and component polish while preserving current Lighthouse ≥ 95 score.
+
+Tasks
+-----
+1. **Typography scale**  
+   • Define Tailwind `fontSize` scale (`xs-7xl`) with fluid clamp values.  
+   • Map headings h1-h4 to semantic classes (`.heading-1`, etc.).  
+   • Default body: RedHatText variable font; highlight text / pull-quotes: RemiliaMincho.
+
+2. **Colour system**  
+   • Create Tailwind `colors` extension:  
+     – `primary`: #B71E34  
+     – `background`, `surface`, `muted`, `border`, `text`, plus dark-mode counterparts.  
+   • Utility classes for accent gradients (`bg-gradient-primary`).
+
+3. **Components**  
+   • Buttons: primary, secondary, ghost variants with focus rings & disabled states.  
+   • Card component with glassmorphism backdrop & tartan subtle overlay (10 % opacity).  
+   • Section wrapper that optionally adds the `.bg-tartan-blur` pseudo background.
+
+4. **Animations & interactions**  
+   • Link underline slide animation using `transition-[width]`.  
+   • Respect `prefers-reduced-motion`.
+
+5. **Code blocks**  
+   • MDX code themes via Prism (`remark-prism`) using solarised-dark variant; custom `pre` padding, rounded corners.
+
+6. **Tailwind config**  
+   • Extend `theme` accordingly; enable `tailwindcss-animate` plugin (optional).
+
+7. **Cleanup**  
+   • Replace hard-coded inline classes in existing pages with new utilities where possible.
+
+QA
+--
+• Visual regression on mobile + desktop.  
+• Contrast ratios WCAG AA.  
+• Lighthouse colour-contrast pass.  
+• No CLS introduced.
+
+Deliverables
+------------
+• `tailwind.config.ts` modifications.  
+• New SCSS/utility classes in `globals.css` if needed.  
+• Refactored components/pages using the new design tokens.  
+• Screenshot comparisons attached in PR.
+
+Commit message example
+----------------------
+```
+feat(style): refine typography & component design system
+```
