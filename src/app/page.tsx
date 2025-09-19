@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThreeHero from "../components/ThreeHero";
+import GlassCard from "../components/ui/GlassCard";
 
 export default function Home() {
   return (
@@ -7,8 +8,7 @@ export default function Home() {
       {/* Three.js hero */}
       <ThreeHero />
       {/* Hero */}
-      <div className="text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-4" id="hero">
-        
+      <GlassCard className="text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">
         <h1 className="text-4xl/tight sm:text-5xl font-semibold tracking-tight">
           Build on the New Internet
         </h1>
@@ -29,10 +29,10 @@ export default function Home() {
             View Work
           </Link>
         </div>
-      </div>
+      </GlassCard>
       
       {/* About */}
-      <div className="max-w-3xl mx-auto px-4" id="about">
+      <GlassCard className="max-w-3xl mx-auto px-8 py-8 rounded-xl" id="about">
         <h2 className="text-xl font-semibold mb-4">About</h2>
         <p className="mb-2">
           Solidity-first developer working on Ethereum since 2022.<br />
@@ -40,36 +40,36 @@ export default function Home() {
           Philosophy: Code as artifact. Immutable logic for decentralized systems.
         </p>
         <p className="text-sm text-neutral-500">Stack: Solidity, Foundry, React, Tailwind, IPFS</p>
-      </div>
+      </GlassCard>
 
       {/* Services */}
       <div className="max-w-5xl mx-auto px-4" id="services">
         <h2 className="text-xl font-semibold mb-6">Services</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4">
+          <GlassCard className="p-6 rounded-lg hover">
             <h3 className="font-medium mb-2">Smart Contract Auditing</h3>
             <ul className="text-sm list-disc pl-4 space-y-1">
               <li>Manual review and static analysis</li>
               <li>Reports with annotations and recommendations</li>
               <li>Foundry, Slither, fuzzing</li>
             </ul>
-          </div>
-          <div className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4">
+          </GlassCard>
+          <GlassCard className="p-6 rounded-lg hover">
             <h3 className="font-medium mb-2">Contract Engineering</h3>
             <ul className="text-sm list-disc pl-4 space-y-1">
               <li>Custom ERC20/721 logic</li>
               <li>On-chain systems design</li>
               <li>Royalty, liquidity, credit, or hybrid primitives</li>
             </ul>
-          </div>
-          <div className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4">
+          </GlassCard>
+          <GlassCard className="p-6 rounded-lg hover">
             <h3 className="font-medium mb-2">Frontend Integration</h3>
             <ul className="text-sm list-disc pl-4 space-y-1">
               <li>React + Tailwind dApps</li>
               <li>On-chain interaction</li>
               <li>IPFS or hosted deployment</li>
             </ul>
-          </div>
+          </GlassCard>
         </div>
       </div>
 
@@ -97,21 +97,22 @@ export default function Home() {
               tech: "Solidity, React",
             },
           ].map((p) => (
-            <li key={p.slug} className="border border-neutral-200 dark:border-neutral-800 rounded-md p-4 hover:border-black dark:hover:border-white transition">
-              <h3 className="font-medium text-lg leading-tight mb-1">{p.title}</h3>
-              <p className="text-sm mb-2">{p.desc}</p>
-              <p className="text-xs text-neutral-500 mb-3">{p.tech}</p>
-              <Link href={`/audits/${p.slug}`} className="underline text-sm">
-                View details →
-              </Link>
-              
+            <li key={p.slug}>
+              <GlassCard className="p-6 rounded-lg hover">
+                <h3 className="font-medium text-lg leading-tight mb-1">{p.title}</h3>
+                <p className="text-sm mb-2">{p.desc}</p>
+                <p className="text-xs text-neutral-500 mb-3">{p.tech}</p>
+                <Link href={`/audits/${p.slug}`} className="underline text-sm">
+                  View details →
+                </Link>
+              </GlassCard>
             </li>
           ))}
         </ul>
       </div>
 
       {/* Contact */}
-      <div className="max-w-3xl mx-auto px-4 text-center" id="contact">
+      <GlassCard className="max-w-3xl mx-auto px-8 py-8 text-center rounded-xl" id="contact">
         <h2 className="text-xl font-semibold mb-4">Contact</h2>
         <p className="mb-4">Freelance smart contract work available.<br />Development, auditing, integration.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -131,7 +132,7 @@ export default function Home() {
             Telegram
           </Link>
         </div>
-      </div>
+      </GlassCard>
     </section>
   );
 }

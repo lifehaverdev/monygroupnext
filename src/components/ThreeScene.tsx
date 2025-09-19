@@ -5,6 +5,7 @@ import { OrbitControls } from '@react-three/drei';
 import Room from './Room';
 import { useFrame } from '@react-three/fiber';
 import { useThree } from '@react-three/fiber';
+import Particles from './Particles';
 
 function Diamond({ paused }: { paused: boolean }) {
   const ref = React.useRef<THREE.Mesh>(null!);
@@ -66,7 +67,7 @@ function SceneContent({ images, paused }: { images: { frontLeft: string; frontRi
   // Adjust camera when scale changes (gives deeper corridor feel)
   useEffect(() => {
     if (scaleX < 1) {
-      perspCam.position.z = 4 + (1 - scaleX) * 2; // pull back slightly
+      perspCam.position.z = 8 + (1 - scaleX) * 2; // pull back slightly
       perspCam.fov = 65 + (1 - scaleX) * 15;      // widen field of view
     } else {
       perspCam.position.z = 6;
@@ -78,6 +79,7 @@ function SceneContent({ images, paused }: { images: { frontLeft: string; frontRi
   return (
     <group scale={roomScale}>
       <Room images={images} depthStretch={depthStretch} />
+      <Particles paused={paused} />
       <Diamond paused={paused} />
     </group>
   );

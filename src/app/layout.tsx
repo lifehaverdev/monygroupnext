@@ -103,6 +103,17 @@ export default function RootLayout({
         <footer className="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 text-center p-4 text-xs text-gray-600 dark:text-gray-400">
           <span className="copyleft">&copy;</span> {new Date().getFullYear()} Mony Group
         </footer>
+        
+        {/* SVG Filters for Liquid Glass Effect */}
+        <svg style={{ display: 'none' }} aria-hidden="true">
+          <defs>
+            <filter id="liquid-glass" x="0%" y="0%" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise" />
+              <feGaussianBlur in="noise" stdDeviation="0.02" result="blur" />
+              <feDisplacementMap in="SourceGraphic" in2="blur" scale="69" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </defs>
+        </svg>
       </body>
     </html>
   );
