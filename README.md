@@ -36,3 +36,9 @@ src/app/
 
 ---
 Generated via `create-next-app --ts --tailwind` and trimmed to essentials.
+
+## Adding audit reports
+
+1. Drop your Markdown file into `audits-src/` – the filename (without extension) becomes the URL slug.
+2. Use absolute paths beginning with `/brand/…` for any images or icons.
+3. Visit `/audits/<slug>` in dev or production to see the rendered report.

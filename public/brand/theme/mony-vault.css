@@ -39,11 +39,21 @@
   font-family: "RedHatText", serif;
 }
 
+/* Inline images (badges, icons) */
 .report img,
 .report svg {
+  display: inline-block;
   max-width: 100%;
   height: auto;
 }
+
+/* Size brand badges and severity icons */
+.report img[src*="/brand/badges/"] { height: 1.25rem; vertical-align: text-bottom; }
+.report img[src*="/brand/icon/icon-sev-"] { height: 1rem; vertical-align: text-bottom; }
+
+/* Spacing when a paragraph starts with an inline image group */
+.report p img:first-child { margin-left: 0; }
+.report p img { margin-right: 0.5rem; margin-top: 0.75rem; }
 
 /* Utility sizing classes */
 .report img.badge { height: 1.25rem; vertical-align: text-bottom; }
@@ -95,3 +105,19 @@
     background: #1e1e1e;
   }
 }
+
+.report p img { margin-right: 0.5rem; }
+
+/* Basic table styling for raw Markdown tables */
+.report table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.report th,
+.report td {
+  border: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Centered footer block spacing */
+.report div[align="center"] { margin-top: 2rem; }
