@@ -1,0 +1,41 @@
+Mailto CTA Integration Prompt
+=============================
+
+Context
+-------
+Site: **monygroupnext** (Next.js 14, TS, Tailwind). Current landing page hero (`src/app/page.tsx`) has two CTA buttons: “View Audit Reports” and “Work With Me”. The second (Work With Me) currently routes to `/contact` or similar; we want it to open the user’s default mail client with a pre-filled email instead—no third-party booking tools.
+
+Objectives
+----------
+1. Create a reusable `EmailCTAButton` component that renders an anchor tag with a properly encoded `mailto:` URI containing:
+   • `to`: `hello@monygroup.net`  
+   • `subject`: “👋 Consultation request – Mony Group”  
+   • `body`: multi-line template prompting for project, timeline, budget, and 2–3 proposed meeting slots.
+2. Replace the “Work With Me” button on the home page with `EmailCTAButton` (keep styling consistent with primary button variant).
+3. Optional: export a secondary variant for footer or contact page if needed.
+
+Implementation details
+----------------------
+• File location: `src/components/EmailCTAButton.tsx` (client component).  
+• Use `encodeURIComponent` for subject & body.  
+• Tailwind classes: `inline-flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-md hover:opacity-90 transition`.
+• Add `aria-label="Compose consultation email"` for accessibility.  
+• Include small envelope SVG or HeroIcon if desired (no new deps).
+
+Edge cases / enhancements
+------------------------
+• If JS disabled, the anchor still works (pure HTML).  
+• Optionally expose props to override subject/body.
+• Tooltip “Opens your mail app” via `title` attribute.
+
+QA
+--
+• Click launches default mail client on macOS, Windows, iOS, Android.  
+• Lighthouse score unchanged.  
+• Button text wraps on small screens.
+
+Commit message example
+----------------------
+```
+feat(cta): switch Work-With-Me button to pre-filled mailto link
+```

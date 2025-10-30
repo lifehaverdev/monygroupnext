@@ -6,6 +6,7 @@ export default function Audits() {
   const demoAudits = [
     { slug: "demo-audit-1", title: "Demo Audit 1" },
     { slug: "demo-audit-2", title: "Demo Audit 2" },
+    { slug: "sample-report", title: "Sample Audit Report" },
   ];
 
   return (

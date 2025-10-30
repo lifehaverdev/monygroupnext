@@ -9,11 +9,15 @@ const ThreeSceneLazy = dynamic(() => import('./ThreeScene'), {
   loading: () => null,
 });
 
-export default function ThreeHero() {
+interface ThreeHeroProps {
+  className?: string;
+}
+
+export default function ThreeHero({ className = "" }: ThreeHeroProps) {
   const idle = useIdle(1500);
 
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 h-screen w-screen">
+    <div className={`pointer-events-none fixed inset-0 -z-10 h-screen w-screen ${className}`}>
       {/* Gradient overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white dark:to-black" />
       {idle && (

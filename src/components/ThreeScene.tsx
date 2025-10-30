@@ -5,7 +5,6 @@ import { OrbitControls } from '@react-three/drei';
 import Room from './Room';
 import { useFrame } from '@react-three/fiber';
 import { useThree } from '@react-three/fiber';
-import Particles from './Particles';
 
 function Diamond({ paused }: { paused: boolean }) {
   const ref = React.useRef<THREE.Mesh>(null!);
@@ -22,7 +21,11 @@ function Diamond({ paused }: { paused: boolean }) {
   );
 }
 
-export default function ThreeScene() {
+interface ThreeSceneProps {
+  images?: { frontLeft: string; frontRight: string; backLeft: string; backRight: string };
+}
+
+export default function ThreeScene({ images: customImages }: ThreeSceneProps) {
   const [prefersReduced, setPrefersReduced] = useState(false);
 
   useEffect(() => {
@@ -35,12 +38,14 @@ export default function ThreeScene() {
     };
   }, []);
 
-  const images = {
+  const defaultImages = {
     frontLeft: '/images/displays/miladystation.png',
     frontRight: '/images/displays/cultexecutive.jpg',
     backLeft: '/images/displays/cigstation.png',
     backRight: '/images/displays/tubbystation.png',
   } as const;
+
+  const images = customImages ?? defaultImages;
 
   return (
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5], fov: 50 }}>
@@ -67,7 +72,7 @@ function SceneContent({ images, paused }: { images: { frontLeft: string; frontRi
   // Adjust camera when scale changes (gives deeper corridor feel)
   useEffect(() => {
     if (scaleX < 1) {
-      perspCam.position.z = 8 + (1 - scaleX) * 2; // pull back slightly
+      perspCam.position.z = 4 + (1 - scaleX) * 2; // pull back slightly
       perspCam.fov = 65 + (1 - scaleX) * 15;      // widen field of view
     } else {
       perspCam.position.z = 6;
@@ -79,7 +84,6 @@ function SceneContent({ images, paused }: { images: { frontLeft: string; frontRi
   return (
     <group scale={roomScale}>
       <Room images={images} depthStretch={depthStretch} />
-      <Particles paused={paused} />
       <Diamond paused={paused} />
     </group>
   );

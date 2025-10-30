@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="177.27083mm"
+   height="177.27083mm"
+   viewBox="0 0 177.27083 177.27083"
+   version="1.1"
+   id="svg5"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title908">Mony Security Brand Package</title>
+  <defs
+     id="defs2">
+    <rect
+       x="2080"
+       y="-1440"
+       width="1440"
+       height="640"
+       id="rect1699" />
+    <linearGradient
+       id="linearGradient932">
+      <stop
+         style="stop-color:#2feff4;stop-opacity:1"
+         offset="0"
+         id="stop928" />
+      <stop
+         style="stop-color:#fdfafd;stop-opacity:0"
+         offset="1"
+         id="stop930" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient932"
+       id="linearGradient934"
+       x1="15.214861"
+       y1="279.73254"
+       x2="12.038723"
+       y2="729.41669"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.18708867,-0.18708867,0.18708867,0.18708867,52.916676,46.302084)" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter971"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
+         id="feColorMatrix969" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter993"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 -0.21 -0.72 -0.07 2 0 "
+         result="fbSourceGraphic"
+         id="feColorMatrix991" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix1013" />
+      <feColorMatrix
+         id="feColorMatrix1015"
+         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
+         in="fbSourceGraphic"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix22312" />
+      <feColorMatrix
+         id="feColorMatrix22314"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 -0.21 -0.72 -0.07 2 0 "
+         result="color2"
+         in="fbSourceGraphic" />
+    </filter>
+    <rect
+       x="2080"
+       y="-1440"
+       width="1440"
+       height="640"
+       id="rect1699-8" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter21760"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
+         id="feColorMatrix21758" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter21782"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
+         id="feColorMatrix21780" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter22182"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 -0.21 -0.72 -0.07 2 0 "
+         result="fbSourceGraphic"
+         id="feColorMatrix22180" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix22202" />
+      <feColorMatrix
+         id="feColorMatrix22204"
+         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
+         in="fbSourceGraphic"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix22224" />
+      <feColorMatrix
+         id="feColorMatrix22226"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 -0.21 -0.72 -0.07 2 0 "
+         result="color2"
+         in="fbSourceGraphic" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter22248"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 -0.21 -0.72 -0.07 2 0 "
+         result="fbSourceGraphic"
+         id="feColorMatrix22246" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix22268" />
+      <feColorMatrix
+         id="feColorMatrix22270"
+         values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 1 0 "
+         in="fbSourceGraphic"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix22290" />
+      <feColorMatrix
+         id="feColorMatrix22292"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 -0.21 -0.72 -0.07 2 0 "
+         result="color2"
+         in="fbSourceGraphic" />
+    </filter>
+    <linearGradient
+       id="mvGrad"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#58C3FF"
+         id="stop2936" />
+      <stop
+         offset="100%"
+         stop-color="#0090F9"
+         id="stop2938" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-59.531256,-52.916667)">
+    <g
+       id="g1110">
+      <path
+         id="rect846"
+         style="fill:url(#linearGradient934);stroke-width:11.4307"
+         d="m 148.16667,52.916667 -88.635414,88.635413 88.635414,88.63541 88.63542,-88.63541 z" />
+    </g>
+  </g>
+  <metadata
+     id="metadata906">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Mony Security Brand Package</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

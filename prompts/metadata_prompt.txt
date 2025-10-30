@@ -1,0 +1,52 @@
+Metadata & Social Card Integration Prompt
+========================================
+
+Context
+-------
+Project: **monygroupnext** (Next.js 14 / App Router, TypeScript, Tailwind).
+Goal: polish the site’s head metadata so that browsers, social networks, and chat apps display a proper favicon and rich preview card.
+
+Current state
+• `src/app/layout.tsx` still contains the boilerplate `title` and `description` values.
+• No `openGraph`, `twitter`, or `icons` fields populated.
+• Favicon assets have been generated (`/public/favicon-16x16.png`, `-32x32.png`, and base `favicon.png`) but the links are not yet inserted.
+• A 1200×630 social preview image (`/public/og.png`) is available.
+
+Objectives
+----------
+1. Replace the `metadata` export in `src/app/layout.tsx` with a complete object that includes:
+   • `title`, `description`, `generator`.
+   • `icons` map for default, shortcut, and apple-touch.
+   • `openGraph` (title, description, url, siteName, images, locale, type).
+   • `twitter` card metadata.
+2. Inject favicon `<link>` tags in the `<head>` element **above** the inlined critical CSS.
+3. Maintain Typescript types (`Metadata` from `next`).
+4. Keep bundle size unchanged (no new deps).
+
+Implementation details
+----------------------
+• Add the favicon links directly in the `<head>` within `layout.tsx`:
+  ```tsx
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  ```
+• `url` in openGraph should be `"https://mony.group/"` (note trailing slash).
+• Import nothing extra—`Metadata` is already in scope.
+
+Edge cases / validations
+-----------------------
+• Run `npm run build && npm start` and check `/robots.txt` & header output.
+• Validate with Twitter Card Validator & FB Sharing Debugger.
+
+QA checklist
+------------
+☐ Tab favicon renders in Chrome/Safari/Edge.
+☐ Messenger/Slack preview shows image + title.
+☐ Lighthouse score remains 100 for SEO.
+
+Commit message example
+----------------------
+```
+feat(meta): add rich open graph & favicon metadata
+```

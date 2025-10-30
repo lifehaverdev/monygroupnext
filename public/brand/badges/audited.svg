@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 360 40" role="img" aria-label="Audited by MONY VAULT">
+<defs>
+<linearGradient id="mvGrad" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#58C3FF"/>
+<stop offset="100%" stop-color="#0090F9"/>
+</linearGradient>
+<style>
+@font-face {
+font-family: 'Remilia';
+src: url('../fonts/RemiliaMincho-Regular.otf') format('opentype');
+font-weight: 400; font-style: normal;
+}
+.pill { fill:#FFFFFF; stroke:#B8C2CC; }
+.label { font-family: 'Remilia', 'Remilia Mincho', 'Red Hat Text', serif; font-size:16px; fill:#0E1218; letter-spacing:1px; }
+</style>
+</defs>
+<rect class="pill" x="0.5" y="0.5" width="359" height="39" rx="19.5"/>
+<image xlink:href="../logo/diamond.svg" x="16" y="12" width="16" height="16" preserveAspectRatio="xMidYMid meet"/>
+<text class="label" x="44" y="26">AUDITED BY MONY VAULT</text>
+</svg>

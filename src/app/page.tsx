@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ThreeHero from "../components/ThreeHero";
 import GlassCard from "../components/ui/GlassCard";
+import EmailCTAButton from "../components/EmailCTAButton";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       {/* Three.js hero */}
       <ThreeHero />
       {/* Hero */}
-      <GlassCard className="text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">
+      <div className="text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">
         <h1 className="text-4xl/tight sm:text-5xl font-semibold tracking-tight">
           Build on the New Internet
         </h1>
@@ -16,12 +17,7 @@ export default function Home() {
           Solidity engineer and auditor. Creative Designer. Full-stack capable. Focused on original architecture, security, and clarity.
         </p>
         <div className="flex gap-4 flex-col sm:flex-row mt-4">
-          <Link
-            href="https://calendly.com/monygroup/call"
-            className="bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-md text-sm font-medium hover:opacity-80 transition"
-          >
-            Book a Call
-          </Link>
+          <EmailCTAButton />
           <Link
             href="#projects"
             className="border border-neutral-300 dark:border-neutral-700 px-6 py-3 rounded-md text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
@@ -29,7 +25,7 @@ export default function Home() {
             View Work
           </Link>
         </div>
-      </GlassCard>
+      </div>
       
       {/* About */}
       <GlassCard className="max-w-3xl mx-auto px-8 py-8 rounded-xl" id="about">
@@ -116,12 +112,7 @@ export default function Home() {
         <h2 className="text-xl font-semibold mb-4">Contact</h2>
         <p className="mb-4">Freelance smart contract work available.<br />Development, auditing, integration.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="https://calendly.com/monygroup/call"
-            className="bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-md text-sm font-medium hover:opacity-80 transition"
-          >
-            Book a Call
-          </Link>
+          <EmailCTAButton />
           <Link href="mailto:hello@mony.group" className="underline text-sm">
             Email
           </Link>

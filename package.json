@@ -10,6 +10,7 @@
     "lighthouse": "mkdir -p lighthouse-reports && npx --no-install lighthouse http://localhost:3000 --output html --output-path lighthouse-reports/$(date +%Y%m%d-%H%M)-report.html --quiet"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@next/mdx": "15.5.3",
     "@react-three/drei": "^9.101.8",
     "@react-three/fiber": "^9.3.0",

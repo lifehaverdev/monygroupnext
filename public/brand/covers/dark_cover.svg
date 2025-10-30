@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1600 600" role="img" aria-label="MONY VAULT Audit Report Cover Dark">
+  <defs>
+    <linearGradient id="mvGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#58C3FF"/>
+      <stop offset="100%" stop-color="#0090F9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="600" fill="#0E1218"/>
+  <rect width="1600" height="600" fill="url(#mvGrad)" opacity="0.08"/>
+
+  <!-- external lockup -->
+  <image
+    xlink:href="../wordmark/lockup_horiz_white.svg"
+    x="120"
+    y="150"
+    width="420"
+    height="auto"
+    preserveAspectRatio="xMinYMin meet"
+  />
+
+  <g font-family="Space Grotesk, Inter, Helvetica, Arial, sans-serif" fill="#FFFFFF">
+    <text x="120" y="340" font-size="48" font-weight="700" fill="#58C3FF">Audit Report: {Project Name}</text>
+    <text x="120" y="385" font-size="20" fill="#CDD5DF">Commit: {short-hash} • Chain(s): {Ethereum / Base} • Date: {YYYY-MM-DD}</text>
+  </g>
+
+  <rect x="0" y="560" width="1600" height="2" fill="url(#mvGrad)"/>
+</svg>
+

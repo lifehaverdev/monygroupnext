@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 40" role="img" aria-label="Independent review badge"> <defs> <!-- Clean 45° gradient in objectBoundingBox units --> <linearGradient id="mvDiamondGrad" x1="0" y1="0" x2="1" y2="1"> <stop offset="0%" stop-color="#2feff4"/> <stop offset="100%" stop-color="#0090F9"/> </linearGradient> <style> .pill { fill:#FFFFFF; stroke:#B8C2CC; } .label { font-family: 'Remilia Mincho','Red Hat Text',serif; font-size:16px; fill:#0E1218; letter-spacing:1px; } </style> </defs> <!-- pill --> <rect class="pill" x="0.5" y="0.5" width="319" height="39" rx="19.5"/> <!-- perfectly centered 16×16 diamond (no big coords, no transforms) --> <svg x="16" y="12" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"> <polygon points="8,0 16,8 8,16 0,8" fill="url(#mvDiamondGrad)"/> </svg> <!-- text baseline at 26 pairs well with a 16px font-size -->
+
+<text class="label" x="44" y="26">INDEPENDENT REVIEW</text>
+</svg>
