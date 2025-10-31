@@ -5,10 +5,11 @@ import path from "path";
 import { marked } from "marked";
 
 
-type Props = { params: { slug: string } };
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = params;
+  const slugData = await params;
+  const slug = slugData.slug;
   const filePath = path.join(process.cwd(), "audits-src", `${slug}.md`);
   try {
     const md = await fs.readFile(filePath, "utf8");
@@ -20,7 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function AuditDetail({ params }: Props) {
-  const { slug } = params;
+  const slugData = await params;
+  const slug = slugData.slug;
   const filePath = path.join(process.cwd(), "audits-src", `${slug}.md`);
   let html: string;
   try {
