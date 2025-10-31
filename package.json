@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "TAILWIND_DISABLE_OXIDE=1 next build",
     "start": "next start",
     "lint": "eslint",
     "lighthouse": "mkdir -p lighthouse-reports && npx --no-install lighthouse http://localhost:3000 --output html --output-path lighthouse-reports/$(date +%Y%m%d-%H%M)-report.html --quiet"
@@ -45,5 +45,8 @@
   },
   "optionalDependencies": {
     "lightningcss-linux-x64-gnu": "^1.30.2"
+  },
+  "engines": {
+    "node": ">=20 <21"
   }
 }
