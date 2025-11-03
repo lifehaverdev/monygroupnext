@@ -18,11 +18,9 @@ const nextConfig = {
     ],
   },
   webpack(config: import('webpack').Configuration) {
-    const alias = config.resolve?.alias as Record<string, unknown> | undefined;
-    if (alias) {
-      delete alias['react'];
-      delete alias['react-dom'];
-    }
+    // Ensure third-party libs like @react-three/fiber get the full React build
+    delete config.resolve?.alias?.react;
+    delete config.resolve?.alias?.['react-dom'];
     return config;
   }
 };
