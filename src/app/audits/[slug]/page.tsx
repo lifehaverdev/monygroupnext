@@ -24,17 +24,18 @@ export default async function AuditDetail({ params }: Props) {
   const slugData = await params;
   const slug = slugData.slug;
   const filePath = path.join(process.cwd(), "audits-src", `${slug}.md`);
+  let html: string;
   try {
     const md = await fs.readFile(filePath, "utf8");
-    const html = await marked.parse(md);
-
-    return (
-      <article
-        className="prose dark:prose-invert max-w-none"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    );
+    html = marked.parse(md);
   } catch {
     notFound();
   }
+
+  return (
+    <article
+      className="prose dark:prose-invert max-w-none"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }
