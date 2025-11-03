@@ -39,9 +39,7 @@
     "typescript": "^5"
   },
   "overrides": {
-    "three-mesh-bvh": "^0.9.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "three-mesh-bvh": "^0.9.1"
   },
   "optionalDependencies": {
     "lightningcss-linux-x64-gnu": "^1.30.2"
