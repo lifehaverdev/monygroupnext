@@ -27,7 +27,7 @@ export default async function AuditDetail({ params }: Props) {
   let html: string;
   try {
     const md = await fs.readFile(filePath, "utf8");
-    html = marked.parse(md);
+    html = marked.parse(md) as string;
   } catch {
     notFound();
   }
