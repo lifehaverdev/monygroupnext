@@ -1,13 +1,14 @@
 import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 const fluid = (min: number, max: number, minVW = 320, maxVW = 1280) =>
   `clamp(${min}rem, calc(${min}rem + (${max} - ${min}) * ((100vw - ${minVW}px) / (${maxVW - minVW}))), ${max}rem)`;
 
 export default {
   content: [
-    './src/**/*.{ts,tsx,mdx}',
-    './app/**/*.{ts,tsx,mdx}',
+    './src/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
@@ -52,10 +53,10 @@ export default {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
+    tailwindcssAnimate,
     plugin(({ addUtilities, theme }) => {
       const fontSizes = ['1', '2', '3', '4'];
-      const headingUtilities = fontSizes.reduce<Record<string, any>>((acc, n, idx) => {
+      const headingUtilities = fontSizes.reduce<Record<string, Record<string, unknown>>>((acc, n, idx) => {
         acc[`.heading-${n}`] = {
           fontSize: theme(`fontSize.${['4xl','3xl','2xl','xl'][idx]}`),
           fontWeight: 700,
@@ -63,6 +64,7 @@ export default {
         };
         return acc;
       }, {});
+      // @ts-expect-error - Tailwind plugin types are complex, but this is valid CSS
       addUtilities(headingUtilities, { variants: ['responsive'] });
     }),
     plugin(({ addUtilities, theme }) => {

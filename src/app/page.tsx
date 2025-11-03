@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThreeHero from "../components/ThreeHero";
+import ThreeHeroWrapper from "../components/ThreeHeroWrapper";
 import GlassCard from "../components/ui/GlassCard";
 import EmailCTAButton from "../components/EmailCTAButton";
 
@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <section className="flex flex-col gap-24 py-16 sm:py-24">
       {/* Three.js hero */}
-      <ThreeHero />
+      <ThreeHeroWrapper />
       {/* Hero */}
       <div className="text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">
         <h1 className="text-4xl/tight sm:text-5xl font-semibold tracking-tight">
