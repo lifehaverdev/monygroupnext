@@ -33,7 +33,6 @@
     "@types/nprogress": "^0.2.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/webpack": "^5",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
     "tailwindcss": "^4",
@@ -42,8 +41,7 @@
   "overrides": {
     "three-mesh-bvh": "^0.9.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-reconciler": "0.27.0"
+    "react-dom": "18.2.0"
   },
   "optionalDependencies": {
     "@tailwindcss/oxide-linux-x64-musl": "4.1.13"
