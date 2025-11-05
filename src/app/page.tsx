@@ -2,33 +2,54 @@ import Link from "next/link";
 import ThreeHeroWrapper from "../components/ThreeHeroWrapper";
 import GlassCard from "../components/ui/GlassCard";
 import EmailCTAButton from "../components/EmailCTAButton";
+import ScrollReveal from "../components/ScrollReveal";
+import ScrollIndicator from "../components/ScrollIndicator";
+import CenterFocusReveal from "../components/CenterFocusReveal";
+import { scrollRevealConfig, centerFocusConfig, layoutConfig } from "../config/parallaxConfig";
+
+// Shared grid layout constants for consistent alignment
+const SECTION_GRID_LAYOUT = `grid grid-cols-[${layoutConfig.headerColumnWidth}_1fr] gap-4`;
+const STICKY_HEADER_CLASSES = `sticky top-[${layoutConfig.stickyHeaderTop}] z-10 mb-12 h-fit`;
+const CARD_MAX_WIDTH = "max-w-2xl";
+const ITEM_GAP_CLASS = `gap-[${layoutConfig.itemGap}]`;
 
 export default function Home() {
   return (
-    <section className="flex flex-col gap-24 py-16 sm:py-24">
-      {/* Three.js hero */}
-      <ThreeHeroWrapper />
-      {/* Hero */}
-      <div className="text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">
-        <h1 className="text-4xl/tight sm:text-5xl font-semibold tracking-tight">
-          Build on the New Internet
-        </h1>
-        <p className="text-neutral-600 dark:text-neutral-300 text-base sm:text-lg leading-relaxed">
-          Solidity engineer and auditor. Creative Designer. Full-stack capable. Focused on original architecture, security, and clarity.
-        </p>
-        <div className="flex gap-4 flex-col sm:flex-row mt-4">
-          <EmailCTAButton />
-          <Link
-            href="#projects"
-            className="border border-neutral-300 dark:border-neutral-700 px-6 py-3 rounded-md text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
-          >
-            View Work
-          </Link>
-        </div>
-      </div>
+    <>
+      {/* Full-screen hero section */}
+      <section className="relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
+        {/* Three.js hero - fixed background, no parallax */}
+        <ThreeHeroWrapper />
+        
+        {/* Hero content - visible immediately, no scroll reveal */}
+        <GlassCard className="relative z-10 text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">
+          <h1 className="text-4xl/tight sm:text-5xl font-semibold tracking-tight">
+            Build on the New Internet
+          </h1>
+          <p className="text-neutral-600 dark:text-neutral-300 text-base sm:text-lg leading-relaxed">
+            Solidity engineer and auditor. Creative Designer. Full-stack capable. Focused on original architecture, security, and clarity.
+          </p>
+          <div className="flex gap-4 flex-col sm:flex-row mt-4">
+            <EmailCTAButton />
+            <Link
+              href="#projects"
+              className="border border-neutral-300 dark:border-neutral-700 px-6 py-3 rounded-md text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
+            >
+              View Work
+            </Link>
+          </div>
+        </GlassCard>
+        
+        {/* Scroll indicator */}
+        <ScrollIndicator />
+      </section>
+
+      {/* Rest of content with scroll reveals */}
+      <section className="flex flex-col gap-24 py-16 sm:py-24">
       
       {/* About */}
-      <GlassCard className="max-w-3xl mx-auto px-8 py-8 rounded-xl" id="about">
+      <ScrollReveal {...scrollRevealConfig.about}>
+        <GlassCard className="max-w-3xl mx-auto px-8 py-8 rounded-xl" id="about">
         <h2 className="text-xl font-semibold mb-4">About</h2>
         <p className="mb-2">
           Solidity-first developer working on Ethereum since 2022.<br />
@@ -37,78 +58,136 @@ export default function Home() {
         </p>
         <p className="text-sm text-neutral-500">Stack: Solidity, Foundry, React, Tailwind, IPFS</p>
       </GlassCard>
+      </ScrollReveal>
 
       {/* Services */}
-      <div className="max-w-5xl mx-auto px-4" id="services">
-        <h2 className="text-xl font-semibold mb-6">Services</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <GlassCard className="p-6 rounded-lg hover">
-            <h3 className="font-medium mb-2">Smart Contract Auditing</h3>
-            <ul className="text-sm list-disc pl-4 space-y-1">
-              <li>Manual review and static analysis</li>
-              <li>Reports with annotations and recommendations</li>
-              <li>Foundry, Slither, fuzzing</li>
-            </ul>
-          </GlassCard>
-          <GlassCard className="p-6 rounded-lg hover">
-            <h3 className="font-medium mb-2">Contract Engineering</h3>
-            <ul className="text-sm list-disc pl-4 space-y-1">
-              <li>Custom ERC20/721 logic</li>
-              <li>On-chain systems design</li>
-              <li>Royalty, liquidity, credit, or hybrid primitives</li>
-            </ul>
-          </GlassCard>
-          <GlassCard className="p-6 rounded-lg hover">
-            <h3 className="font-medium mb-2">Frontend Integration</h3>
-            <ul className="text-sm list-disc pl-4 space-y-1">
-              <li>React + Tailwind dApps</li>
-              <li>On-chain interaction</li>
-              <li>IPFS or hosted deployment</li>
-            </ul>
-          </GlassCard>
+      <div className="max-w-5xl mx-auto px-4" id="services" style={{ width: '100%', maxWidth: '1024px', marginTop: '80vh' }}>
+        {/* Grid layout: header left, content centered - consistent across sections */}
+        <div className={SECTION_GRID_LAYOUT} style={{ gridTemplateColumns: '200px 1fr', width: '100%' }}>
+          {/* Sticky header - left column - aligned consistently */}
+          <div 
+            className={STICKY_HEADER_CLASSES} 
+            style={{ 
+              position: 'sticky', 
+              top: layoutConfig.stickyHeaderTop, 
+              zIndex: 10,
+              gridColumn: '1 / 2',
+              width: '200px',
+              left: 0,
+              paddingLeft: '1rem',
+            }}
+          >
+            <h2 className="text-xl font-semibold w-fit">Services</h2>
+          </div>
+          
+          {/* Content - right column - centered */}
+          <div className={`flex flex-col items-center ${ITEM_GAP_CLASS}`}>
+          <div style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <CenterFocusReveal speed={centerFocusConfig.services.speed} delay={centerFocusConfig.services.delay} className="w-full flex justify-center">
+              <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+              <h3 className="font-medium mb-3 text-lg">Smart Contract Auditing</h3>
+              <ul className="text-sm list-disc pl-4 space-y-1">
+                <li>Manual review and formal verification analysis</li>
+                <li>Reports with annotations and recommendations</li>
+                <li>Gas Optimization</li>
+                <li>Foundry, Slither, fuzzing, symbolic execution</li>
+              </ul>
+            </GlassCard>
+            </CenterFocusReveal>
+          </div>
+          <div style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <CenterFocusReveal speed={centerFocusConfig.services.speed} delay={centerFocusConfig.services.delay} className="w-full flex justify-center">
+              <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+                <h3 className="font-medium mb-3 text-lg">Contract Engineering</h3>
+              <ul className="text-sm list-disc pl-4 space-y-1">
+                <li>Custom ERC20/721 logic</li>
+                <li>On-chain systems design</li>
+                <li>Royalty, liquidity, credit, or hybrid primitives</li>
+              </ul>
+            </GlassCard>
+            </CenterFocusReveal>
+          </div>
+          <div style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <CenterFocusReveal speed={centerFocusConfig.services.speed} delay={centerFocusConfig.services.delay} className="w-full flex justify-center">
+              <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+                <h3 className="font-medium mb-3 text-lg">Frontend Integration</h3>
+              <ul className="text-sm list-disc pl-4 space-y-1">
+                <li>React + Tailwind dApps</li>
+                <li>On-chain interaction</li>
+                <li>IPFS or hosted deployment</li>
+              </ul>
+            </GlassCard>
+            </CenterFocusReveal>
+          </div>
+          </div>
         </div>
       </div>
 
       {/* Projects */}
-      <div className="max-w-5xl mx-auto px-4" id="projects">
-        <h2 className="text-xl font-semibold mb-6">Projects</h2>
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="max-w-5xl mx-auto px-4" id="projects" style={{ width: '100%', maxWidth: '1024px' }}>
+        {/* Grid layout: header left, content centered - consistent across sections */}
+        <div className={SECTION_GRID_LAYOUT} style={{ gridTemplateColumns: '200px 1fr', width: '100%' }}>
+          {/* Sticky header - left column - aligned consistently */}
+          <div 
+            className={STICKY_HEADER_CLASSES} 
+            style={{ 
+              position: 'sticky', 
+              top: layoutConfig.stickyHeaderTop, 
+              zIndex: 10,
+              gridColumn: '1 / 2',
+              width: '200px',
+              left: 0,
+              paddingLeft: '1rem',
+            }}
+          >
+            <h2 className="text-xl font-semibold w-fit">Projects</h2>
+          </div>
+          
+          {/* Content - right column - centered */}
+          <div className={`flex flex-col items-center ${ITEM_GAP_CLASS}`}>
           {[
             {
               slug: "cult-executives",
               title: "Cult Executives",
               desc: "ERC721/ERC20 hybrid with automated liquidity royalty. Original architecture.",
               tech: "Solidity, Viem, Foundry",
+              config: centerFocusConfig.projects.cultExecutives,
             },
             {
               slug: "station-this-bot",
               title: "StationThisBot",
               desc: "AI access via on-chain credit + Telegram integration. Smart contract manages authorization and message routing.",
               tech: "Solidity, Foundry, OpenAI",
+              config: centerFocusConfig.projects.stationThisBot,
             },
             {
               slug: "station-series",
               title: "Station Series",
               desc: "MiladyStation (flagship), CigStation, TubbyStation — three-project NFT and minting series. Each audited and expandable.",
               tech: "Solidity, React",
+              config: centerFocusConfig.projects.stationSeries,
             },
           ].map((p) => (
-            <li key={p.slug}>
-              <GlassCard className="p-6 rounded-lg hover">
-                <h3 className="font-medium text-lg leading-tight mb-1">{p.title}</h3>
-                <p className="text-sm mb-2">{p.desc}</p>
-                <p className="text-xs text-neutral-500 mb-3">{p.tech}</p>
+            <div key={p.slug} style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <CenterFocusReveal speed={p.config.speed} delay={p.config.delay} className="w-full flex justify-center">
+                <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+                <h3 className="font-medium text-lg leading-tight mb-2">{p.title}</h3>
+                <p className="text-sm mb-3">{p.desc}</p>
+                <p className="text-xs text-neutral-500 mb-4">{p.tech}</p>
                 <Link href={`/audits/${p.slug}`} className="underline text-sm">
                   View details →
                 </Link>
               </GlassCard>
-            </li>
+              </CenterFocusReveal>
+            </div>
           ))}
-        </ul>
+          </div>
+        </div>
       </div>
 
       {/* Contact */}
-      <GlassCard className="max-w-3xl mx-auto px-8 py-8 text-center rounded-xl" id="contact">
+      <ScrollReveal {...scrollRevealConfig.contact}>
+        <GlassCard className="max-w-3xl mx-auto px-8 py-8 text-center rounded-xl" id="contact" style={{ marginTop: '80vh' }}>
         <h2 className="text-xl font-semibold mb-4">Contact</h2>
         <p className="mb-4">Freelance smart contract work available.<br />Development, auditing, integration.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -124,6 +203,8 @@ export default function Home() {
           </Link>
         </div>
       </GlassCard>
-    </section>
+      </ScrollReveal>
+      </section>
+    </>
   );
 }

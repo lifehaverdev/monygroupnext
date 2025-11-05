@@ -234,4 +234,50 @@ pre[class*="language-"] {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* GPU acceleration for scroll reveals */
+  [style*="translate3d"] {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Optimize scroll reveal animations */
+  .scroll-reveal-optimized {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+
+  /* Scroll indicator animations */
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(-10px);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 2s infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-bounce-slow {
+      animation: none;
+    }
+  }
 }

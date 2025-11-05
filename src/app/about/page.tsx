@@ -1,16 +1,18 @@
 import PortraitScene from "../../components/about/PortraitScene";
 import GlassCard from "../../components/ui/GlassCard";
+import ScrollReveal from "../../components/ScrollReveal";
 
 export const metadata = { title: "About" };
 
 export default function About() {
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen py-32 px-6">
-      {/* Three.js background */}
+      {/* Three.js background - fixed, no parallax */}
       <PortraitScene />
 
-      {/* Minimal copy inside glass card */}
-      <GlassCard className="relative z-10 max-w-xl mx-auto px-8 py-10 text-center backdrop-blur-md/60 bg-white/10 dark:bg-black/10 space-y-6 leading-relaxed">
+      {/* Minimal copy inside glass card with scroll reveal */}
+      <ScrollReveal direction="up" distance={60} delay={200} className="relative z-10">
+        <GlassCard className="max-w-xl mx-auto px-8 py-10 text-center backdrop-blur-md/60 bg-white/10 dark:bg-black/10 space-y-6 leading-relaxed">
         <h1 className="text-3xl font-semibold tracking-tight">About</h1>
         <p className="">Solidity developer focused on smart contract architecture, security, and deployment.</p>
         <p>
@@ -24,6 +26,7 @@ export default function About() {
         </p>
         <p>Email | ENS | Telegram</p>
       </GlassCard>
+      </ScrollReveal>
     </main>
   );
 }
