@@ -1,0 +1,110 @@
+RENDERING TIMING & ASSET LOADING INVESTIGATION
+==============================================
+
+PROJECT CONTEXT:
+- Next.js 16 app with TypeScript and Tailwind CSS
+- Home page located at: src/app/page.tsx
+- Initial splash screen: src/components/InitialSplash.tsx
+- ThreeJS hero scene: src/components/ThreeHero.tsx → ThreeHeroWrapper.tsx → ThreeScene.tsx
+- Font loading: src/app/layout.tsx (RemiliaMincho font)
+- Tartan background: src/app/globals.css (.bg-tartan-blur class)
+
+CURRENT PROBLEMS:
+
+1. TARTAN SPLASH BACKGROUND - ABRUPT APPEARANCE
+   Problem: The tartan pattern (bg-tartan-blur) initially isn't visible and then abruptly appears when the CSS background-image loads.
+   Expected: The tartan should fade in smoothly once the image is loaded, not appear suddenly.
+   
+   Location: src/components/InitialSplash.tsx line 28
+   CSS: src/app/globals.css line 120-125 (.bg-tartan-blur)
+   Image: /public/patterns/remiliatartan.jpeg
+   
+   Investigation needed:
+   - How to detect when background-image has loaded?
+   - Implement fade-in animation for the tartan once loaded
+   - Consider preloading the image or using a different loading strategy
+
+2. FONT LOADING - TEXT APPEARS BEFORE FONT LOADS
+   Problem: The "Preparing for you…" text appears immediately using RemiliaMincho font, but the font takes a second to load (font-display: swap causes fallback first).
+   Expected: If the RemiliaMincho font isn't loaded yet, don't show the text. Only show the loading bar until the font is ready.
+   
+   Location: src/components/InitialSplash.tsx line 35
+   Font: RemiliaMincho-Regular.otf (loaded in layout.tsx)
+   CSS: src/app/globals.css line 105-110, 116-118
+   
+   Investigation needed:
+   - Use document.fonts.check() or document.fonts.ready to detect font load
+   - Conditionally render text only after font is loaded
+   - Keep loading bar visible regardless of font state
+
+3. THREEJS SCENE - LOADS AFTER SPLASH DISAPPEARS
+   Problem: The splash screen disappears after ~1.1 seconds, but the ThreeJS scene doesn't appear until seconds later (waits for useIdle hook + dynamic import + scene initialization).
+   Expected: The splash screen should wait until the ThreeJS scene is fully ready before disappearing. The whole point of the splash is to hide the page until the scene is ready to display.
+   
+   Location: 
+   - InitialSplash: src/components/InitialSplash.tsx (hardcoded 1100ms timeout)
+   - ThreeHero: src/components/ThreeHero.tsx (uses useIdle hook with 1500ms delay)
+   - useIdle: src/hooks/useIdle.ts (idle-until-urgent strategy)
+   - ThreeScene: src/components/ThreeScene.tsx (React Three Fiber scene)
+   
+   Investigation needed:
+   - How to detect when ThreeJS scene is fully initialized and rendered?
+   - Coordinate InitialSplash dismissal with ThreeScene readiness
+   - Consider using React Three Fiber's onCreated callback or similar
+   - May need to pass a callback from ThreeScene up to InitialSplash
+
+KEY FILES TO INVESTIGATE:
+- src/components/InitialSplash.tsx - Splash screen component with timing logic
+- src/components/ThreeHero.tsx - ThreeJS wrapper with lazy loading
+- src/components/ThreeHeroWrapper.tsx - Server/client boundary wrapper
+- src/components/ThreeScene.tsx - The actual ThreeJS scene component
+- src/hooks/useIdle.ts - Idle detection hook
+- src/app/layout.tsx - Font loading and InitialSplash placement
+- src/app/globals.css - Tartan background CSS and font definitions
+
+SOLUTION APPROACH:
+
+1. TARTAN BACKGROUND FADE-IN:
+   - Preload the tartan image in InitialSplash or layout
+   - Use Image preloading or link rel="preload"
+   - Add opacity transition (0 → 1) once image load event fires
+   - Consider using an <img> tag with opacity instead of CSS background for better control
+
+2. FONT LOADING DETECTION:
+   - Use document.fonts.ready promise or document.fonts.check('1em RemiliaMincho')
+   - Add state to track font readiness
+   - Conditionally render text: {fontReady && <p>Preparing for you…</p>}
+   - Keep loading bar always visible
+
+3. THREEJS SCENE READINESS:
+   - Create a context or state management to track scene readiness
+   - Use React Three Fiber's onCreated callback or useEffect in ThreeScene
+   - Emit a custom event or use a shared state (Context API, Zustand, etc.)
+   - Modify InitialSplash to wait for sceneReady signal instead of fixed timeout
+   - Consider combining: wait for (fontReady && tartanLoaded && sceneReady) before dismissing
+
+CRITERIA FOR SUCCESS:
+- Tartan pattern fades in smoothly after image loads (no abrupt appearance)
+- "Preparing for you…" text only appears after RemiliaMincho font is loaded
+- Loading bar is always visible during splash
+- Splash screen stays visible until ThreeJS scene is fully ready
+- Smooth transition from splash to main page with scene already visible
+- No jarring visual changes or "flash of unstyled content"
+
+TECHNICAL CONSIDERATIONS:
+- Use browser APIs: document.fonts, Image.onload, requestAnimationFrame
+- Consider performance: don't block main thread, use async loading detection
+- Handle edge cases: slow connections, font loading failures, ThreeJS initialization errors
+- Maintain accessibility: ensure content is readable during all states
+- Test on slow connections and various devices
+
+TESTING CHECKLIST:
+- [ ] Tartan appears with smooth fade-in (not abrupt)
+- [ ] Text only shows after font loads (no fallback font flash)
+- [ ] Loading bar visible throughout splash
+- [ ] Splash waits for ThreeJS scene to be ready
+- [ ] Scene is visible immediately after splash disappears
+- [ ] Works on slow 3G connection
+- [ ] Works with reduced motion preferences
+- [ ] No console errors or warnings
+

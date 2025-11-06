@@ -1,9 +1,8 @@
 "use client";
 import dynamic from 'next/dynamic';
 import React from 'react';
-import useIdle from '../hooks/useIdle';
 
-// Dynamic import wrapped so bundle is fetched only when idle or after first interaction.
+// Dynamic import - load immediately since splash will wait for it
 const ThreeSceneLazy = dynamic(() => import('./ThreeScene'), {
   ssr: false,
   loading: () => null,
@@ -14,17 +13,14 @@ interface ThreeHeroProps {
 }
 
 export default function ThreeHero({ className = "" }: ThreeHeroProps) {
-  const idle = useIdle(1500);
-
+  // Load immediately - splash screen will wait for scene to be ready
   return (
     <div className={`pointer-events-none fixed inset-0 -z-10 h-screen w-screen ${className}`}>
       {/* Gradient overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white dark:to-black" />
-      {idle && (
-        <div className="absolute inset-0">
-          <ThreeSceneLazy />
-        </div>
-      )}
+      <div className="absolute inset-0">
+        <ThreeSceneLazy />
+      </div>
     </div>
   );
 }

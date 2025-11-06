@@ -121,7 +121,7 @@ body {
   background-image: url('/patterns/remiliatartan.jpeg');
   background-size: 250px;
   filter: blur(15px);
-  opacity: 0.35;
+  /* Opacity controlled dynamically via inline styles in InitialSplash */
 }
 
 /* Loader keyframes */

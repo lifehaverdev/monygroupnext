@@ -6,6 +6,7 @@ import { OrbitControls } from '@react-three/drei';
 import Room from './Room';
 import { useFrame } from '@react-three/fiber';
 import { useThree } from '@react-three/fiber';
+import { useReadiness } from '../contexts/ReadinessContext';
 
 function Diamond({ paused }: { paused: boolean }) {
   const ref = React.useRef<THREE.Mesh>(null!);
@@ -28,6 +29,7 @@ interface ThreeSceneProps {
 
 export default function ThreeScene({ images: customImages }: ThreeSceneProps) {
   const [prefersReduced, setPrefersReduced] = useState(false);
+  const { setSceneProgress } = useReadiness();
 
   useEffect(() => {
     const mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -48,23 +50,55 @@ export default function ThreeScene({ images: customImages }: ThreeSceneProps) {
 
   const images = customImages ?? defaultImages;
 
+  // Track scene loading progress
+  useEffect(() => {
+    setSceneProgress(20); // Scene component mounted, Canvas initializing
+  }, [setSceneProgress]);
+
+  // Update progress when Canvas is created
+  useEffect(() => {
+    const canvasReadyTimeout = setTimeout(() => {
+      setSceneProgress(40); // Canvas created
+    }, 100);
+
+    return () => clearTimeout(canvasReadyTimeout);
+  }, []);
+
+  // Fallback: if scene never loads, signal ready after timeout
+  useEffect(() => {
+    const fallbackTimeout = setTimeout(() => {
+      setSceneProgress(100); // Allow splash to dismiss even if scene fails
+    }, 5000);
+
+    return () => clearTimeout(fallbackTimeout);
+  }, [setSceneProgress]);
+
   return (
-    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5], fov: 50 }}>
+    <Canvas 
+      dpr={[1, 1.5]} 
+      camera={{ position: [0, 0, 5], fov: 50 }}
+    >
       <ambientLight intensity={1} />
       <directionalLight position={[2, 2, 5]} intensity={1} />
       <Suspense fallback={null}>
-        <SceneContent images={images} paused={prefersReduced} />
+        <SceneContent 
+          images={images} 
+          paused={prefersReduced} 
+          onProgress={(progress) => setSceneProgress(progress)}
+          onReady={() => setSceneProgress(100)} 
+        />
       </Suspense>
       <OrbitControls enableZoom={false} autoRotate={false} />
     </Canvas>
   );
 }
 
-function SceneContent({ images, paused }: { images: { frontLeft: string; frontRight: string; backLeft: string; backRight: string }; paused: boolean }) {
+function SceneContent({ images, paused, onProgress, onReady }: { images: { frontLeft: string; frontRight: string; backLeft: string; backRight: string }; paused: boolean; onProgress?: (progress: number) => void; onReady: () => void }) {
   const { viewport, camera } = useThree();
   const perspCam = camera as THREE.PerspectiveCamera;
   const baseWidth = 4; // native room width units
   const scaleX = viewport.width < baseWidth ? viewport.width / baseWidth : 1;
+  const readyRef = React.useRef(false);
 
   // Memoise vector to avoid re-creating array each frame
   const roomScale = useMemo<[number, number, number]>(() => [scaleX, 1, 1], [scaleX]);
@@ -81,6 +115,26 @@ function SceneContent({ images, paused }: { images: { frontLeft: string; frontRi
     }
     perspCam.updateProjectionMatrix();
   }, [scaleX, perspCam]);
+
+  // Signal readiness once scene content is mounted and rendered
+  // Since SceneContent only mounts after Suspense resolves (textures loaded),
+  // we can signal readiness after first render
+  useEffect(() => {
+    if (readyRef.current) return;
+    
+    // SceneContent mounted means textures are loaded (Suspense resolved)
+    if (onProgress) onProgress(60); // Textures loaded, scene rendering
+    
+    // Wait for two frames to ensure everything is rendered, then mark complete
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!readyRef.current) {
+          readyRef.current = true;
+          onReady(); // Final call to mark as 100%
+        }
+      });
+    });
+  }, [onReady, onProgress]);
 
   return (
     <group scale={roomScale}>

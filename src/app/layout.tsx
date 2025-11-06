@@ -5,6 +5,7 @@ import Link from "next/link";
 import localFont from "next/font/local";
 import RouteProgress from "../components/RouteProgress";
 import InitialSplash from "../components/InitialSplash";
+import { ReadinessProvider } from "../contexts/ReadinessContext";
 // Critical above-the-fold CSS (≈2 kB) is inlined to eliminate the render-blocking request for globals.css.
 // It contains root color variables, font faces, and body font-family so that the first paint has correct styles.
 const criticalCss = `
@@ -64,6 +65,7 @@ const remilia = localFont({
   src: "../../public/fonts/RemiliaMincho-Regular.otf",
   variable: "--font-remilia",
   display: "swap",
+  preload: true, // Preload the font for faster loading
 });
 
 export const metadata: Metadata = {
@@ -118,6 +120,14 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        {/* Preload RemiliaMincho font for faster text appearance */}
+        <link
+          rel="preload"
+          href="/fonts/RemiliaMincho-Regular.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
         {/* Inline critical CSS for first paint */}
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
         {/* Convert render-blocking stylesheet to non-blocking */}
@@ -126,8 +136,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${redHat.variable} ${remilia.variable} antialiased flex flex-col min-h-screen`}
         >
-        <InitialSplash />
-        <RouteProgress />
+        <ReadinessProvider>
+          <InitialSplash />
+          <RouteProgress />
         <header className="sticky top-0 z-20 bg-gray-100/90 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800">
           <nav className="container mx-auto flex gap-6 p-4 text-sm font-medium">
             <Link href="/">Home</Link>
@@ -153,6 +164,7 @@ export default function RootLayout({
             </filter>
           </defs>
         </svg>
+        </ReadinessProvider>
       </body>
     </html>
   );
