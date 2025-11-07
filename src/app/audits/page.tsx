@@ -1,4 +1,12 @@
 import Link from "next/link";
+import PageScene from "../../components/PageScene";
+import GlassCard from "../../components/ui/GlassCard";
+import ScrollReveal from "../../components/ScrollReveal";
+import CenterFocusReveal from "../../components/CenterFocusReveal";
+import ScrollIndicator from "../../components/ScrollIndicator";
+import { scrollRevealConfig, centerFocusConfig } from "../../config/parallaxConfig";
+
+const CARD_MAX_WIDTH = "max-w-2xl";
 
 export const metadata = { title: "Audits" };
 
@@ -10,17 +18,47 @@ export default function Audits() {
   ];
 
   return (
-    <section className="space-y-4">
-      <h1 className="text-2xl font-semibold">Audit Reports</h1>
-      <ul className="list-disc pl-6 space-y-1">
-        {demoAudits.map((a) => (
-          <li key={a.slug}>
-            <Link href={`/audits/${a.slug}`} className="underline">
-              {a.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <>
+      {/* Three.js background - fixed, no parallax */}
+      <PageScene />
+
+      {/* Hero section - scroll snap point */}
+      <section className="scroll-snap-section relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
+        {/* Hero content - visible immediately, no scroll reveal */}
+        <GlassCard className="relative z-10 text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">
+          <h1 className="text-4xl/tight sm:text-5xl font-semibold tracking-tight">
+            MONY VAULT
+          </h1>
+          <p className="text-neutral-600 dark:text-neutral-300 text-base sm:text-lg leading-relaxed">
+            These audits are performed by the Mony Vault Security Team and you can get one too
+          </p>
+        </GlassCard>
+        
+        {/* Scroll indicator */}
+        <ScrollIndicator />
+      </section>
+
+      {/* Audit items - one per viewport, perfectly centered, each is a scroll snap point */}
+      {demoAudits.map((audit) => (
+        <section key={audit.slug} className="scroll-snap-section flex items-center justify-center min-h-screen w-full">
+          <CenterFocusReveal 
+            speed={centerFocusConfig.services.speed} 
+            delay={centerFocusConfig.services.delay}
+            visibilityThreshold={centerFocusConfig.services.visibilityThreshold}
+            className="w-full flex justify-center"
+          >
+            <GlassCard className={`p-8 rounded-lg ${CARD_MAX_WIDTH} w-full`}>
+              <h3 className="font-medium text-lg leading-tight mb-2">{audit.title}</h3>
+              <Link
+                href={`/audits/${audit.slug}`}
+                className="underline text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition"
+              >
+                View audit report →
+              </Link>
+            </GlassCard>
+          </CenterFocusReveal>
+        </section>
+      ))}
+    </>
   );
 }

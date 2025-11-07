@@ -59,6 +59,33 @@
   isolation: isolate !important; /* Default: isolate for hero card */
 }
 
+/* MOBILE OPTIMIZATION: Disable expensive SVG filters on mobile devices */
+/* Use simplified backdrop-filter only to prevent Three.js compositing issues */
+@media (hover: none) and (pointer: coarse) {
+  .glass::after {
+    /* Remove expensive SVG filter on mobile - causes compositing issues with Three.js */
+    filter: none !important;
+    /* Use simple backdrop-filter instead for glass effect */
+    backdrop-filter: blur(8px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(180%) !important;
+  }
+  
+  /* Disable filter layer entirely on mobile - JavaScript already skips creation, but ensure CSS doesn't apply */
+  .glass-filter-layer-fixed {
+    display: none !important;
+    filter: none !important;
+  }
+  
+  /* For glass cards in parallax on mobile, use simple backdrop-filter */
+  .glass-in-parallax::after,
+  .parallax-element .glass::after,
+  .parallax-element > .glass::after {
+    filter: none !important;
+    backdrop-filter: blur(8px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(180%) !important;
+  }
+}
+
 /* Dark mode variant */
 .dark .glass::before {
   box-shadow: 
@@ -300,6 +327,7 @@ pre[class*="language-"] {
    */
   
   /* Fixed-position filter layer - positioned to match glass card, can see fixed background */
+  /* NOTE: This is disabled on mobile via JavaScript and CSS media queries */
   .glass-filter-layer-fixed {
     position: fixed !important;
     z-index: -1 !important; /* Behind everything except fixed background (-10) */
@@ -319,6 +347,14 @@ pre[class*="language-"] {
     will-change: transform;
     /* Ensure proper compositing with background */
     mix-blend-mode: normal !important;
+  }
+  
+  /* MOBILE: Disable expensive filter layer on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    .glass-filter-layer-fixed {
+      display: none !important;
+      filter: none !important;
+    }
   }
 
   /* Remove filter from glass::after when inside parallax - filter is on fixed layer instead */

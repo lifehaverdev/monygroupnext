@@ -8,7 +8,7 @@ import { useReadiness } from "../contexts/ReadinessContext";
 NProgress.configure({ showSpinner: false, minimum: 0.15 });
 
 // Pages that use Three.js backgrounds
-const THREE_JS_PAGES = ['/', '/about'];
+const THREE_JS_PAGES = ['/', '/about', '/audits'];
 
 export default function RouteProgress() {
   const pathname = usePathname();

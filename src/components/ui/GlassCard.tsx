@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/utils';
+import { isMobileDevice } from '../../lib/device';
 
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'sm' | 'lg';
@@ -14,6 +15,7 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
     const glassRef = useRef<HTMLDivElement>(null);
     const [isInParallax, setIsInParallax] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Combine refs
     const combinedRef = (node: HTMLDivElement | null) => {
@@ -27,6 +29,7 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
     useEffect(() => {
       setMounted(true);
+      setIsMobile(isMobileDevice());
     }, []);
 
     // Check if glass card is inside a transformed container (parallax, scroll reveal, etc.)
@@ -98,12 +101,18 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
     }, [mounted]);
 
     // Create and manage fixed filter layer OUTSIDE any transformed parents
+    // SKIP ON MOBILE: Expensive SVG filters cause compositing issues with Three.js on mobile
     useEffect(() => {
-      if (!mounted || !isInParallax || !glassRef.current) return;
+      // Don't create filter layer on mobile devices - causes Three.js disruption
+      if (!mounted || !isInParallax || !glassRef.current || isMobile) return;
 
       let filterLayer: HTMLDivElement | null = null;
       let rafId: number | null = null;
       let resizeObserver: ResizeObserver | null = null;
+      let intersectionObserver: IntersectionObserver | null = null;
+      let lastUpdateTime = 0;
+      const MOBILE_THROTTLE_MS = 100; // Throttle updates on mobile (though we skip entirely)
+      const DESKTOP_THROTTLE_MS = 16; // ~60fps on desktop
 
       // Small delay to ensure glass card is fully rendered and positioned
       const timeoutId = setTimeout(() => {
@@ -135,11 +144,25 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
           filterLayer.style.borderRadius = computedStyle.borderRadius || '1rem';
         };
 
-        // Initial position
-        updateFilterPosition();
-
-        // Update on scroll and resize with RAF throttling
+        // Throttled update function with time-based throttling
         const scheduleUpdate = () => {
+          const now = performance.now();
+          const throttleMs = isMobile ? MOBILE_THROTTLE_MS : DESKTOP_THROTTLE_MS;
+          
+          if (now - lastUpdateTime < throttleMs) {
+            if (rafId !== null) return;
+            rafId = requestAnimationFrame(() => {
+              const nowAfterRAF = performance.now();
+              if (nowAfterRAF - lastUpdateTime >= throttleMs) {
+                updateFilterPosition();
+                lastUpdateTime = nowAfterRAF;
+              }
+              rafId = null;
+            });
+            return;
+          }
+
+          lastUpdateTime = now;
           if (rafId !== null) return;
           rafId = requestAnimationFrame(() => {
             updateFilterPosition();
@@ -147,6 +170,32 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
           });
         };
 
+        // Initial position
+        updateFilterPosition();
+
+        // Use IntersectionObserver to only update when glass card is visible
+        // This significantly reduces unnecessary updates when cards are off-screen
+        intersectionObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // Card is visible, allow updates
+                updateFilterPosition();
+              }
+            });
+          },
+          {
+            root: null,
+            rootMargin: '50px', // Start updating slightly before card enters viewport
+            threshold: 0,
+          }
+        );
+
+        if (glassRef.current) {
+          intersectionObserver.observe(glassRef.current);
+        }
+
+        // Update on scroll and resize with throttling
         window.addEventListener('scroll', scheduleUpdate, { passive: true });
         window.addEventListener('resize', scheduleUpdate, { passive: true });
 
@@ -166,12 +215,15 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
         if (resizeObserver) {
           resizeObserver.disconnect();
         }
+        if (intersectionObserver) {
+          intersectionObserver.disconnect();
+        }
         // Remove filter layer from DOM
         if (filterLayer?.parentElement) {
           filterLayer.parentElement.removeChild(filterLayer);
         }
       };
-    }, [mounted, isInParallax]);
+    }, [mounted, isInParallax, isMobile]);
 
     return (
       <>
