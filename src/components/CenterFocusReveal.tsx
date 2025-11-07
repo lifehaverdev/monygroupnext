@@ -9,18 +9,24 @@ interface CenterFocusRevealProps {
   speed?: number;
   delay?: number;
   className?: string;
+  visibilityThreshold?: number; // Threshold for binary visibility (default 0.5 = 50% viewport)
 }
 
+/**
+ * Awwwards-style center focus reveal with binary visibility
+ * Element is either fully visible (opacity 1) or fully hidden (opacity 0)
+ * No gradual fades - clean, precise, one element at a time
+ */
 export default function CenterFocusReveal({
   children,
-  speed = 0.3,
+  speed = 0.2,
   delay = 0,
   className = '',
+  visibilityThreshold = 0.5, // 50% viewport = fully visible, else hidden
 }: CenterFocusRevealProps) {
   const [mounted, setMounted] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(true);
   const [opacity, setOpacity] = useState(0);
-  const [transform, setTransform] = useState('translate3d(0, 40px, 0)');
   const elementRef = useRef<HTMLDivElement>(null);
 
   const { ref, inView } = useInView({
@@ -49,7 +55,7 @@ export default function CenterFocusReveal({
 
     let rafId: number | null = null;
 
-    const updateOpacity = () => {
+    const updateVisibility = () => {
       if (!elementRef.current) return;
 
       rafId = requestAnimationFrame(() => {
@@ -63,43 +69,15 @@ export default function CenterFocusReveal({
         // Calculate distance from viewport center
         const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
         
-        // Create a readable focus zone with fade in/out
-        // - focusZone: Items stay fully opaque in this range (readable area)
-        // - fadeZone: Items fade in/out in this range (transition area)
-        const focusZone = viewportHeight * 0.15; // 15% of viewport - fully opaque range
-        const fadeZone = viewportHeight * 0.25; // 25% of viewport - fade transition range
-        const maxDistance = focusZone + fadeZone; // 40% total - fade out complete
+        // Binary visibility: element is visible if within threshold distance
+        // threshold is a multiplier of viewport height (0.5 = 50% of viewport)
+        const thresholdDistance = viewportHeight * visibilityThreshold;
         
-        // Calculate opacity with plateau for readability
-        let opacityValue: number;
-        if (distanceFromCenter <= focusZone) {
-          // In focus zone - fully opaque for reading
-          opacityValue = 1.0;
-        } else if (distanceFromCenter <= maxDistance) {
-          // In fade zone - transition from 1.0 to 0.0
-          const fadeProgress = (distanceFromCenter - focusZone) / fadeZone;
-          opacityValue = Math.max(0, 1 - fadeProgress);
-        } else {
-          // Beyond fade zone - fully transparent
-          opacityValue = 0;
-        }
-        
-        // Calculate transform: subtle movement during fade
-        let translateY: number;
-        if (distanceFromCenter <= focusZone) {
-          // In focus - minimal movement
-          translateY = 0;
-        } else if (distanceFromCenter <= maxDistance) {
-          // Fading - move slightly based on distance
-          const fadeProgress = (distanceFromCenter - focusZone) / fadeZone;
-          translateY = fadeProgress * 30; // Move up to 30px as fading
-        } else {
-          // Beyond fade - maintain position
-          translateY = 30;
-        }
+        // Binary on/off - no gradual fade
+        const isVisible = distanceFromCenter <= thresholdDistance;
+        const opacityValue = isVisible ? 1.0 : 0.0;
         
         setOpacity(opacityValue);
-        setTransform(`translate3d(0, ${translateY}px, 0)`);
       });
     };
 
@@ -107,10 +85,10 @@ export default function CenterFocusReveal({
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }
-      updateOpacity();
+      updateVisibility();
     };
 
-    updateOpacity();
+    updateVisibility();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
 
@@ -121,7 +99,7 @@ export default function CenterFocusReveal({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [mounted, isReducedMotion, inView]);
+  }, [mounted, isReducedMotion, inView, visibilityThreshold]);
 
   if (!mounted || isReducedMotion) {
     return <div className={className}>{children}</div>;
@@ -140,9 +118,8 @@ export default function CenterFocusReveal({
       className={className}
       style={{
         opacity,
-        transform,
-        transition: mounted && !isReducedMotion ? 'opacity 200ms ease-out, transform 200ms ease-out' : 'none',
-        willChange: mounted && !isReducedMotion ? 'opacity, transform' : 'auto',
+        transition: mounted && !isReducedMotion ? 'opacity 300ms ease-out' : 'none',
+        willChange: mounted && !isReducedMotion ? 'opacity' : 'auto',
       }}
     >
       <ParallaxElement speed={speed} direction="up" disabled={isReducedMotion}>

@@ -19,80 +19,80 @@
     display: inline-block;
     transform: scaleX(-1);
   }
+}
 
-  /* Liquid Glass Effect Utilities */
-  .glass {
-    position: relative;
-    background: transparent;
-    overflow: hidden;
-    isolation: isolate;
-  }
+/* Liquid Glass Effect - outside layer for higher specificity */
+.glass {
+  position: relative !important;
+  background: transparent !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+}
 
-  .glass > * {
-    position: relative;
-    z-index: 1;
-  }
+.glass > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
 
-  .glass::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    border-radius: inherit;
-    box-shadow: 
-      inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7), 
-      inset 0 0 3px 1px rgba(255, 255, 255, 0.7);
-    background-color: rgb(255 255 255 / 50%);
-  }
+.glass::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  overflow: hidden !important;
+  border-radius: inherit !important;
+  box-shadow: 
+    inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7), 
+    inset 0 0 3px 1px rgba(255, 255, 255, 0.7) !important;
+  background-color: rgb(255 255 255 / 50%) !important;
+}
 
-  .glass::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    border-radius: inherit;
-    backdrop-filter: blur(0px);
-    filter: url(#liquid-glass);
-    overflow: hidden;
-    isolation: isolate;
-  }
+.glass::after {
+  content: '' !important;
+  position: absolute !important;
+  z-index: -1 !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  backdrop-filter: blur(0px) !important;
+  filter: url(#liquid-glass) !important;
+  overflow: hidden !important;
+  isolation: isolate !important; /* Default: isolate for hero card */
+}
 
-  /* Dark mode variant */
-  .dark .glass::before {
-    box-shadow: 
-      inset 2px 2px 0px -2px rgba(255, 255, 255, 0.1), 
-      inset 0 0 3px 1px rgba(255, 255, 255, 0.1);
-    background-color: rgb(255 255 255 / 10%);
-  }
+/* Dark mode variant */
+.dark .glass::before {
+  box-shadow: 
+    inset 2px 2px 0px -2px rgba(255, 255, 255, 0.1), 
+    inset 0 0 3px 1px rgba(255, 255, 255, 0.1) !important;
+  background-color: rgb(255 255 255 / 10%) !important;
+}
 
-  /* Glass variants */
-  .glass-sm::before {
-    box-shadow: 
-      inset 1px 1px 0px -1px rgba(255, 255, 255, 0.6), 
-      inset 0 0 2px 1px rgba(255, 255, 255, 0.6);
-  }
+/* Glass variants */
+.glass-sm::before {
+  box-shadow: 
+    inset 1px 1px 0px -1px rgba(255, 255, 255, 0.6), 
+    inset 0 0 2px 1px rgba(255, 255, 255, 0.6) !important;
+}
 
-  .glass-lg::before {
-    box-shadow: 
-      inset 3px 3px 0px -3px rgba(255, 255, 255, 0.8), 
-      inset 0 0 4px 2px rgba(255, 255, 255, 0.8);
-  }
+.glass-lg::before {
+  box-shadow: 
+    inset 3px 3px 0px -3px rgba(255, 255, 255, 0.8), 
+    inset 0 0 4px 2px rgba(255, 255, 255, 0.8) !important;
+}
 
-  /* Hover effects */
-  .glass-hover:hover::before {
-    background-color: rgb(255 255 255 / 25%);
-    box-shadow: 
-      inset 2px 2px 0px -2px rgba(255, 255, 255, 0.8), 
-      inset 0 0 4px 2px rgba(255, 255, 255, 0.8);
-  }
+/* Hover effects */
+.glass-hover:hover::before {
+  background-color: rgb(255 255 255 / 25%) !important;
+  box-shadow: 
+    inset 2px 2px 0px -2px rgba(255, 255, 255, 0.8), 
+    inset 0 0 4px 2px rgba(255, 255, 255, 0.8) !important;
+}
 
-  .dark .glass-hover:hover::before {
-    background-color: rgb(255 255 255 / 15%);
-    box-shadow: 
-      inset 2px 2px 0px -2px rgba(255, 255, 255, 0.15), 
-      inset 0 0 4px 2px rgba(255, 255, 255, 0.15);
-  }
+.dark .glass-hover:hover::before {
+  background-color: rgb(255 255 255 / 15%) !important;
+  box-shadow: 
+    inset 2px 2px 0px -2px rgba(255, 255, 255, 0.15), 
+    inset 0 0 4px 2px rgba(255, 255, 255, 0.15) !important;
 }
 
 @font-face {
@@ -246,11 +246,124 @@ pre[class*="language-"] {
     }
   }
 
+  /* Awwwards-style scroll snap for precise positioning */
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
+  .scroll-snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-snap-type: none;
+    }
+  }
+
+  /* Ensure sticky headers work properly - no overflow clipping */
+  #services,
+  #projects {
+    overflow: visible;
+  }
+
+  /* Ensure sticky positioning works within sections */
+  #services > div[style*="position: sticky"],
+  #projects > div[style*="position: sticky"] {
+    position: sticky !important;
+  }
+
+
   /* GPU acceleration for scroll reveals */
   [style*="translate3d"] {
     transform-style: preserve-3d;
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* LIQUID GLASS FIX: Use fixed-position filter layer for parallax containers */
+  /* 
+   * KEY INSIGHT: The hero card works because:
+   * 1. ThreeHero is `fixed inset-0 -z-10` (fixed background covering viewport)
+   * 2. Hero GlassCard is `relative z-10` with NO transform on it or parents
+   * 3. glass::after with `isolation: isolate` and filter can see through to fixed background
+   * 
+   * PROBLEM: Other cards are inside ParallaxElement with `transform: translate3d(...)`
+   * This transform creates a new stacking context. The filter on glass::after can't see
+   * the fixed background outside that transformed coordinate space, even with isolation: auto.
+   * 
+   * SOLUTION: For glass cards inside parallax containers, create a fixed-position filter layer
+   * that matches the glass card's position. This layer is positioned relative to the viewport
+   * (like the fixed background), so the filter can see and distort the background correctly.
+   * The filter layer is created by GlassCard component via JavaScript.
+   */
+  
+  /* Fixed-position filter layer - positioned to match glass card, can see fixed background */
+  .glass-filter-layer-fixed {
+    position: fixed !important;
+    z-index: -1 !important; /* Behind everything except fixed background (-10) */
+    /* Apply the liquid glass filter */
+    filter: url(#liquid-glass) !important;
+    /* CRITICAL: Use a very subtle background so filter has something to process */
+    /* The filter will distort this and show the background through it */
+    background: rgba(255, 255, 255, 0.01) !important; /* Nearly transparent but not completely */
+    backdrop-filter: blur(0px) !important;
+    /* Match glass card border radius */
+    border-radius: 1rem !important;
+    /* Don't interfere with pointer events */
+    pointer-events: none !important;
+    /* Remove isolation so filter can see through to fixed background */
+    isolation: auto !important;
+    /* Ensure it's behind glass card content but can see background */
+    will-change: transform;
+    /* Ensure proper compositing with background */
+    mix-blend-mode: normal !important;
+  }
+
+  /* Remove filter from glass::after when inside parallax - filter is on fixed layer instead */
+  .glass-in-parallax::after,
+  .parallax-element .glass::after,
+  .parallax-element > .glass::after {
+    /* No filter on ::after - filter is applied to fixed-position layer */
+    filter: none !important;
+    /* Keep other properties for glass effect appearance */
+    position: absolute !important;
+    z-index: -1 !important;
+    isolation: auto !important;
+    backdrop-filter: blur(0px) !important;
+    background: transparent !important;
+    overflow: hidden !important;
+    border-radius: inherit !important;
+    content: '' !important;
+    inset: 0 !important;
+  }
+
+  /* Ensure glass element itself doesn't have filter when in parallax */
+  /* CRITICAL: The filter layer is at z-index -1 (fixed position), behind everything */
+  /* The glass card content needs to be rendered in a separate compositing layer */
+  /* so it's not affected by the filter layer's distortion */
+  .glass-in-parallax,
+  .parallax-element .glass,
+  .parallax-element > .glass {
+    position: relative !important;
+    filter: none !important;
+    /* Don't create isolation here - let content be in parent's stacking context */
+    /* but ensure it's above the filter layer */
+    z-index: auto !important;
+  }
+
+  /* CRITICAL: Ensure glass card content creates its own compositing layer */
+  /* This isolates it from the filter layer so the filter only affects the background */
+  .glass-in-parallax > *,
+  .parallax-element .glass > *,
+  .parallax-element > .glass > * {
+    position: relative !important;
+    z-index: 1 !important;
+    /* Create new stacking context to isolate from filter layer */
+    isolation: isolate !important;
+    /* Use will-change to hint browser to create separate compositing layer */
+    will-change: transform;
   }
 
   /* Optimize scroll reveal animations */

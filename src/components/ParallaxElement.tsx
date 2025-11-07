@@ -3,6 +3,7 @@
 import React, { ReactNode, useRef, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useParallax } from '../hooks/useParallax';
+import { cn } from '../lib/utils';
 
 interface ParallaxElementProps {
   children: ReactNode;
@@ -129,7 +130,7 @@ export default function ParallaxElement({
           (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
         }
       }}
-      className={className}
+      className={cn('parallax-element', className)}
       style={{
         transform,
         willChange: disabled || isReducedMotion ? 'auto' : 'transform',

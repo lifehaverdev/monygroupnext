@@ -7,17 +7,13 @@ import ScrollIndicator from "../components/ScrollIndicator";
 import CenterFocusReveal from "../components/CenterFocusReveal";
 import { scrollRevealConfig, centerFocusConfig, layoutConfig } from "../config/parallaxConfig";
 
-// Shared grid layout constants for consistent alignment
-const SECTION_GRID_LAYOUT = `grid grid-cols-[${layoutConfig.headerColumnWidth}_1fr] gap-4`;
-const STICKY_HEADER_CLASSES = `sticky top-[${layoutConfig.stickyHeaderTop}] z-10 mb-12 h-fit`;
 const CARD_MAX_WIDTH = "max-w-2xl";
-const ITEM_GAP_CLASS = `gap-[${layoutConfig.itemGap}]`;
 
 export default function Home() {
   return (
     <>
-      {/* Full-screen hero section */}
-      <section className="relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
+      {/* Full-screen hero section - scroll snap point */}
+      <section className="scroll-snap-section relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
         {/* Three.js hero - fixed background, no parallax */}
         <ThreeHeroWrapper />
         
@@ -44,12 +40,10 @@ export default function Home() {
         <ScrollIndicator />
       </section>
 
-      {/* Rest of content with scroll reveals */}
-      <section className="flex flex-col gap-24 py-16 sm:py-24">
-      
-      {/* About */}
+      {/* About section - scroll snap point */}
+      <section className="scroll-snap-section flex flex-col items-center justify-center min-h-screen w-full py-16">
       <ScrollReveal {...scrollRevealConfig.about}>
-        <GlassCard className="max-w-3xl mx-auto px-8 py-8 rounded-xl" id="about">
+          <GlassCard className="max-w-3xl mx-auto px-8 py-8 rounded-xl text-center" id="about">
         <h2 className="text-xl font-semibold mb-4">About</h2>
         <p className="mb-2">
           Solidity-first developer working on Ethereum since 2022.<br />
@@ -59,32 +53,34 @@ export default function Home() {
         <p className="text-sm text-neutral-500">Stack: Solidity, Foundry, React, Tailwind, IPFS</p>
       </GlassCard>
       </ScrollReveal>
+      </section>
 
-      {/* Services */}
-      <div className="max-w-5xl mx-auto px-4" id="services" style={{ width: '100%', maxWidth: '1024px', marginTop: '80vh' }}>
-        {/* Grid layout: header left, content centered - consistent across sections */}
-        <div className={SECTION_GRID_LAYOUT} style={{ gridTemplateColumns: '200px 1fr', width: '100%' }}>
-          {/* Sticky header - left column - aligned consistently */}
-          <div 
-            className={STICKY_HEADER_CLASSES} 
+      {/* Services section - scroll snap points for each item */}
+      <div id="services" style={{ position: 'relative', minHeight: '300vh' }}>
+        {/* Sticky header - top left, sticks while section is in view */}
+        <div 
             style={{ 
               position: 'sticky', 
               top: layoutConfig.stickyHeaderTop, 
+            left: layoutConfig.stickyHeaderLeft,
+            width: 'fit-content',
               zIndex: 10,
-              gridColumn: '1 / 2',
-              width: '200px',
-              left: 0,
-              paddingLeft: '1rem',
+            alignSelf: 'flex-start',
             }}
           >
-            <h2 className="text-xl font-semibold w-fit">Services</h2>
+          <h2 className="text-xl font-semibold">Services</h2>
           </div>
           
-          {/* Content - right column - centered */}
-          <div className={`flex flex-col items-center ${ITEM_GAP_CLASS}`}>
-          <div style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <CenterFocusReveal speed={centerFocusConfig.services.speed} delay={centerFocusConfig.services.delay} className="w-full flex justify-center">
-              <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+        {/* Services items - one per viewport, perfectly centered, each is a scroll snap point */}
+        {/* Service 1 */}
+        <section className="scroll-snap-section flex items-center justify-center min-h-screen w-full">
+          <CenterFocusReveal 
+            speed={centerFocusConfig.services.speed} 
+            delay={centerFocusConfig.services.delay}
+            visibilityThreshold={centerFocusConfig.services.visibilityThreshold}
+            className="w-full flex justify-center"
+          >
+            <GlassCard className={`p-8 rounded-lg ${CARD_MAX_WIDTH} w-full`}>
               <h3 className="font-medium mb-3 text-lg">Smart Contract Auditing</h3>
               <ul className="text-sm list-disc pl-4 space-y-1">
                 <li>Manual review and formal verification analysis</li>
@@ -94,10 +90,17 @@ export default function Home() {
               </ul>
             </GlassCard>
             </CenterFocusReveal>
-          </div>
-          <div style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <CenterFocusReveal speed={centerFocusConfig.services.speed} delay={centerFocusConfig.services.delay} className="w-full flex justify-center">
-              <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+        </section>
+
+        {/* Service 2 */}
+        <section className="scroll-snap-section flex items-center justify-center min-h-screen w-full">
+          <CenterFocusReveal 
+            speed={centerFocusConfig.services.speed} 
+            delay={centerFocusConfig.services.delay}
+            visibilityThreshold={centerFocusConfig.services.visibilityThreshold}
+            className="w-full flex justify-center"
+          >
+            <GlassCard className={`p-8 rounded-lg ${CARD_MAX_WIDTH} w-full`}>
                 <h3 className="font-medium mb-3 text-lg">Contract Engineering</h3>
               <ul className="text-sm list-disc pl-4 space-y-1">
                 <li>Custom ERC20/721 logic</li>
@@ -106,10 +109,17 @@ export default function Home() {
               </ul>
             </GlassCard>
             </CenterFocusReveal>
-          </div>
-          <div style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <CenterFocusReveal speed={centerFocusConfig.services.speed} delay={centerFocusConfig.services.delay} className="w-full flex justify-center">
-              <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+        </section>
+
+        {/* Service 3 */}
+        <section className="scroll-snap-section flex items-center justify-center min-h-screen w-full">
+          <CenterFocusReveal 
+            speed={centerFocusConfig.services.speed} 
+            delay={centerFocusConfig.services.delay}
+            visibilityThreshold={centerFocusConfig.services.visibilityThreshold}
+            className="w-full flex justify-center"
+          >
+            <GlassCard className={`p-8 rounded-lg ${CARD_MAX_WIDTH} w-full`}>
                 <h3 className="font-medium mb-3 text-lg">Frontend Integration</h3>
               <ul className="text-sm list-disc pl-4 space-y-1">
                 <li>React + Tailwind dApps</li>
@@ -118,33 +128,26 @@ export default function Home() {
               </ul>
             </GlassCard>
             </CenterFocusReveal>
-          </div>
-          </div>
-        </div>
+        </section>
       </div>
 
-      {/* Projects */}
-      <div className="max-w-5xl mx-auto px-4" id="projects" style={{ width: '100%', maxWidth: '1024px' }}>
-        {/* Grid layout: header left, content centered - consistent across sections */}
-        <div className={SECTION_GRID_LAYOUT} style={{ gridTemplateColumns: '200px 1fr', width: '100%' }}>
-          {/* Sticky header - left column - aligned consistently */}
-          <div 
-            className={STICKY_HEADER_CLASSES} 
+      {/* Projects section - scroll snap points for each item */}
+      <div id="projects" style={{ position: 'relative', minHeight: '300vh' }}>
+        {/* Sticky header - top left, sticks while section is in view */}
+        <div 
             style={{ 
               position: 'sticky', 
               top: layoutConfig.stickyHeaderTop, 
+            left: layoutConfig.stickyHeaderLeft,
+            width: 'fit-content',
               zIndex: 10,
-              gridColumn: '1 / 2',
-              width: '200px',
-              left: 0,
-              paddingLeft: '1rem',
+            alignSelf: 'flex-start',
             }}
           >
-            <h2 className="text-xl font-semibold w-fit">Projects</h2>
+          <h2 className="text-xl font-semibold">Projects</h2>
           </div>
           
-          {/* Content - right column - centered */}
-          <div className={`flex flex-col items-center ${ITEM_GAP_CLASS}`}>
+        {/* Projects items - one per viewport, perfectly centered, each is a scroll snap point */}
           {[
             {
               slug: "cult-executives",
@@ -168,9 +171,14 @@ export default function Home() {
               config: centerFocusConfig.projects.stationSeries,
             },
           ].map((p) => (
-            <div key={p.slug} style={{ marginLeft: '-1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <CenterFocusReveal speed={p.config.speed} delay={p.config.delay} className="w-full flex justify-center">
-                <GlassCard className={`p-8 rounded-lg hover ${CARD_MAX_WIDTH} w-full`}>
+          <section key={p.slug} className="scroll-snap-section flex items-center justify-center min-h-screen w-full">
+            <CenterFocusReveal 
+              speed={p.config.speed} 
+              delay={p.config.delay}
+              visibilityThreshold={p.config.visibilityThreshold}
+              className="w-full flex justify-center"
+            >
+              <GlassCard className={`p-8 rounded-lg ${CARD_MAX_WIDTH} w-full`}>
                 <h3 className="font-medium text-lg leading-tight mb-2">{p.title}</h3>
                 <p className="text-sm mb-3">{p.desc}</p>
                 <p className="text-xs text-neutral-500 mb-4">{p.tech}</p>
@@ -179,15 +187,14 @@ export default function Home() {
                 </Link>
               </GlassCard>
               </CenterFocusReveal>
-            </div>
+          </section>
           ))}
-          </div>
-        </div>
       </div>
 
-      {/* Contact */}
+      {/* Contact section - scroll snap point */}
+      <section className="scroll-snap-section flex flex-col items-center justify-center min-h-screen w-full py-16">
       <ScrollReveal {...scrollRevealConfig.contact}>
-        <GlassCard className="max-w-3xl mx-auto px-8 py-8 text-center rounded-xl" id="contact" style={{ marginTop: '80vh' }}>
+          <GlassCard className="max-w-3xl mx-auto px-8 py-8 text-center rounded-xl" id="contact">
         <h2 className="text-xl font-semibold mb-4">Contact</h2>
         <p className="mb-4">Freelance smart contract work available.<br />Development, auditing, integration.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
