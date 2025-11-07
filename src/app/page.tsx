@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ThreeHeroWrapper from "../components/ThreeHeroWrapper";
+import PageScene from "../components/PageScene";
 import GlassCard from "../components/ui/GlassCard";
 import EmailCTAButton from "../components/EmailCTAButton";
 import ScrollReveal from "../components/ScrollReveal";
@@ -15,7 +15,7 @@ export default function Home() {
       {/* Full-screen hero section - scroll snap point */}
       <section className="scroll-snap-section relative flex flex-col items-center justify-center min-h-screen w-full overflow-hidden">
         {/* Three.js hero - fixed background, no parallax */}
-        <ThreeHeroWrapper />
+        <PageScene />
         
         {/* Hero content - visible immediately, no scroll reveal */}
         <GlassCard className="relative z-10 text-center flex flex-col items-center gap-6 max-w-2xl mx-auto px-8 py-12 rounded-2xl" id="hero">

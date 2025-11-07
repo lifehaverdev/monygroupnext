@@ -285,7 +285,7 @@ pre[class*="language-"] {
   /* LIQUID GLASS FIX: Use fixed-position filter layer for parallax containers */
   /* 
    * KEY INSIGHT: The hero card works because:
-   * 1. ThreeHero is `fixed inset-0 -z-10` (fixed background covering viewport)
+   * 1. PageScene is `fixed inset-0 -z-10` (fixed background covering viewport)
    * 2. Hero GlassCard is `relative z-10` with NO transform on it or parents
    * 3. glass::after with `isolation: isolate` and filter can see through to fixed background
    * 

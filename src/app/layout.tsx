@@ -5,6 +5,7 @@ import Link from "next/link";
 import localFont from "next/font/local";
 import RouteProgress from "../components/RouteProgress";
 import InitialSplash from "../components/InitialSplash";
+import NavigationSplash from "../components/NavigationSplash";
 import { ReadinessProvider } from "../contexts/ReadinessContext";
 // Critical above-the-fold CSS (≈2 kB) is inlined to eliminate the render-blocking request for globals.css.
 // It contains root color variables, font faces, and body font-family so that the first paint has correct styles.
@@ -138,6 +139,7 @@ export default function RootLayout({
         >
         <ReadinessProvider>
           <InitialSplash />
+          <NavigationSplash />
           <RouteProgress />
         <header className="sticky top-0 z-20 bg-gray-100/90 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800">
           <nav className="container mx-auto flex gap-6 p-4 text-sm font-medium">

@@ -1,5 +1,6 @@
 "use client";
 import React, { Suspense, useEffect, useState, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -30,6 +31,7 @@ interface ThreeSceneProps {
 export default function ThreeScene({ images: customImages }: ThreeSceneProps) {
   const [prefersReduced, setPrefersReduced] = useState(false);
   const { setSceneProgress } = useReadiness();
+  const pathname = usePathname();
 
   useEffect(() => {
     const mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -41,11 +43,23 @@ export default function ThreeScene({ images: customImages }: ThreeSceneProps) {
     };
   }, []);
 
+  // Auto-detect page slug from pathname
+  const getPageSlug = () => {
+    if (!pathname) return 'home';
+    // Extract slug from pathname: '/' -> 'home', '/about' -> 'about', etc.
+    const slug = pathname === '/' ? 'home' : pathname.slice(1);
+    return slug;
+  };
+
+  const pageSlug = getPageSlug();
+  const basePath = `/images/displays/${pageSlug}`;
+
+  // Construct image paths based on page slug, fallback to home
   const defaultImages = {
-    frontLeft: '/images/displays/miladystation.png',
-    frontRight: '/images/displays/cultexecutive.jpg',
-    backLeft: '/images/displays/cigstation.png',
-    backRight: '/images/displays/tubbystation.png',
+    frontLeft: `${basePath}/1.jpeg`,
+    backLeft: `${basePath}/2.jpeg`,
+    backRight: `${basePath}/3.jpeg`,
+    frontRight: `${basePath}/4.jpeg`,
   } as const;
 
   const images = customImages ?? defaultImages;

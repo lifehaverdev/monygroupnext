@@ -1,4 +1,4 @@
-import PortraitScene from "../../components/about/PortraitScene";
+import PageScene from "../../components/PageScene";
 import GlassCard from "../../components/ui/GlassCard";
 import ScrollReveal from "../../components/ScrollReveal";
 
@@ -8,7 +8,7 @@ export default function About() {
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen py-32 px-6">
       {/* Three.js background - fixed, no parallax */}
-      <PortraitScene />
+      <PageScene />
 
       {/* Minimal copy inside glass card with scroll reveal */}
       <ScrollReveal direction="up" distance={60} delay={200} className="relative z-10">

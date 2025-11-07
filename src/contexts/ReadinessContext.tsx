@@ -17,6 +17,9 @@ interface ReadinessContextType {
   setPageProgress: (progress: number) => void;
   overallProgress: number; // 0-100, average of all
   allReady: boolean;
+  resetProgress: () => void;
+  isNavigating: boolean;
+  setIsNavigating: (value: boolean) => void;
 }
 
 const ReadinessContext = createContext<ReadinessContextType | undefined>(undefined);
@@ -28,12 +31,22 @@ export function ReadinessProvider({ children }: { children: ReactNode }) {
     scene: 0,
     page: 0,
   });
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const overallProgress = useMemo(() => {
     return Math.round((progress.tartan + progress.font + progress.scene + progress.page) / 4);
   }, [progress]);
 
   const allReady = overallProgress === 100;
+
+  const resetProgress = useCallback(() => {
+    setProgress({
+      tartan: 0,
+      font: 0,
+      scene: 0,
+      page: 0,
+    });
+  }, []);
 
   const setTartanProgress = useCallback((value: number) => {
     setProgress((prev) => {
@@ -67,18 +80,35 @@ export function ReadinessProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const contextValue = useMemo(
+    () => ({
+      progress,
+      setTartanProgress,
+      setFontProgress,
+      setSceneProgress,
+      setPageProgress,
+      overallProgress,
+      allReady,
+      resetProgress,
+      isNavigating,
+      setIsNavigating,
+    }),
+    [
+      progress,
+      setTartanProgress,
+      setFontProgress,
+      setSceneProgress,
+      setPageProgress,
+      overallProgress,
+      allReady,
+      resetProgress,
+      isNavigating,
+      setIsNavigating,
+    ]
+  );
+
   return (
-    <ReadinessContext.Provider
-      value={{
-        progress,
-        setTartanProgress,
-        setFontProgress,
-        setSceneProgress,
-        setPageProgress,
-        overallProgress,
-        allReady,
-      }}
-    >
+    <ReadinessContext.Provider value={contextValue}>
       {children}
     </ReadinessContext.Provider>
   );
