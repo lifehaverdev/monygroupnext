@@ -59,13 +59,27 @@
   isolation: isolate !important; /* Default: isolate for hero card */
 }
 
-/* MOBILE OPTIMIZATION: Disable expensive SVG filters on mobile devices */
+/* MOBILE OPTIMIZATION: Disable expensive SVG filters and compositing layers on mobile devices */
 /* Use simplified backdrop-filter only to prevent Three.js compositing issues */
+/* 
+ * KEY ISSUES ON MOBILE:
+ * 1. feDisplacementMap with scale="69" is VERY expensive - requires per-pixel displacement calculations
+ * 2. isolation: isolate creates new stacking contexts that conflict with WebGL compositing
+ * 3. will-change: transform forces compositing layers that can cause repaints
+ * 4. The combination of fixed positioning + filters + isolation causes GPU compositing conflicts
+ */
 @media (hover: none) and (pointer: coarse) {
+  /* Disable isolation on glass element - prevents stacking context conflicts with WebGL */
+  .glass {
+    isolation: auto !important;
+  }
+  
   .glass::after {
-    /* Remove expensive SVG filter on mobile - causes compositing issues with Three.js */
+    /* Remove expensive SVG filter on mobile - feDisplacementMap is too expensive */
     filter: none !important;
-    /* Use simple backdrop-filter instead for glass effect */
+    /* Remove isolation to prevent compositing layer conflicts */
+    isolation: auto !important;
+    /* Use simple backdrop-filter instead for glass effect (more GPU-friendly) */
     backdrop-filter: blur(8px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(8px) saturate(180%) !important;
   }
@@ -74,6 +88,8 @@
   .glass-filter-layer-fixed {
     display: none !important;
     filter: none !important;
+    isolation: auto !important;
+    will-change: auto !important;
   }
   
   /* For glass cards in parallax on mobile, use simple backdrop-filter */
@@ -81,8 +97,24 @@
   .parallax-element .glass::after,
   .parallax-element > .glass::after {
     filter: none !important;
+    isolation: auto !important;
     backdrop-filter: blur(8px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(8px) saturate(180%) !important;
+  }
+  
+  /* Remove will-change hints on mobile - they force compositing layers that conflict with WebGL */
+  .glass-in-parallax > *,
+  .parallax-element .glass > *,
+  .parallax-element > .glass > * {
+    will-change: auto !important;
+    isolation: auto !important;
+  }
+  
+  /* Also disable isolation on glass-in-parallax itself */
+  .glass-in-parallax,
+  .parallax-element .glass,
+  .parallax-element > .glass {
+    isolation: auto !important;
   }
 }
 
