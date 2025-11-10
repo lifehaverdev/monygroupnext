@@ -16,8 +16,11 @@ interface RoomProps {
 
 // Simple low-poly PSX-style cube room: floor, 3 walls + ceiling (5 planes)
 // and four framed images textured onto portions of the front & back walls.
+// Note: ThreeScene handles fallback to home images for unknown pages,
+// so images passed here should always be valid paths.
 export default function Room({ images, depthStretch = 1 }: RoomProps) {
-  // Load textures once
+  // Load textures - useTexture will suspend until loaded
+  // If images fail to load, Suspense boundary in ThreeScene will handle it
   const [frontLeftTx, frontRightTx, backLeftTx, backRightTx] = useTexture([
     images.frontLeft,
     images.frontRight,

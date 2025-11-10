@@ -43,12 +43,16 @@ export default function ThreeScene({ images: customImages }: ThreeSceneProps) {
     };
   }, []);
 
+  // Known page slugs that have display images
+  const knownSlugs = ['home', 'about', 'audits'];
+  
   // Auto-detect page slug from pathname
   const getPageSlug = () => {
     if (!pathname) return 'home';
     // Extract slug from pathname: '/' -> 'home', '/about' -> 'about', etc.
     const slug = pathname === '/' ? 'home' : pathname.slice(1);
-    return slug;
+    // Fallback to 'home' if slug doesn't have display images
+    return knownSlugs.includes(slug) ? slug : 'home';
   };
 
   const pageSlug = getPageSlug();
