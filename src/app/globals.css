@@ -9,8 +9,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f0f0f;
+    --foreground: #f5f5f5;
+  }
+  
+  /* Improve body background in dark mode */
+  body {
+    background-color: #0f0f0f;
   }
 }
 
@@ -59,50 +64,76 @@
   isolation: isolate !important; /* Default: isolate for hero card */
 }
 
-/* MOBILE OPTIMIZATION: Disable expensive SVG filters and compositing layers on mobile devices */
-/* Use simplified backdrop-filter only to prevent Three.js compositing issues */
+/* MOBILE OPTIMIZATION: Completely disable glass effects for smooth parallax rendering */
+/* Priority: Smooth parallax scrolling > Glass effects */
 /* 
- * KEY ISSUES ON MOBILE:
- * 1. feDisplacementMap with scale="69" is VERY expensive - requires per-pixel displacement calculations
- * 2. isolation: isolate creates new stacking contexts that conflict with WebGL compositing
- * 3. will-change: transform forces compositing layers that can cause repaints
- * 4. The combination of fixed positioning + filters + isolation causes GPU compositing conflicts
+ * MOBILE ISSUES WITH GLASS EFFECTS:
+ * 1. feDisplacementMap with scale="69" is VERY expensive - per-pixel displacement calculations
+ * 2. isolation: isolate creates stacking contexts that conflict with WebGL compositing
+ * 3. will-change: transform forces compositing layers that cause repaints
+ * 4. backdrop-filter can still cause compositing issues on some mobile GPUs
+ * 5. The combination causes Three.js canvas to shake/stutter
+ * 
+ * SOLUTION: Use simple semi-transparent backgrounds on mobile - no filters, no special effects.
+ * This ensures smooth 60fps parallax scrolling without GPU conflicts.
  */
 @media (hover: none) and (pointer: coarse) {
-  /* Disable isolation on glass element - prevents stacking context conflicts with WebGL */
+  /* Disable all glass compositing properties to prevent WebGL conflicts */
   .glass {
     isolation: auto !important;
+    overflow: visible !important; /* Remove overflow hidden to prevent repaints */
   }
   
   .glass::after {
-    /* Remove expensive SVG filter on mobile - feDisplacementMap is too expensive */
+    /* COMPLETELY DISABLE all filter effects on mobile */
     filter: none !important;
-    /* Remove isolation to prevent compositing layer conflicts */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     isolation: auto !important;
-    /* Use simple backdrop-filter instead for glass effect (more GPU-friendly) */
-    backdrop-filter: blur(8px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(8px) saturate(180%) !important;
+    /* Don't even create the pseudo-element - prevents any compositing */
+    content: none !important;
   }
   
-  /* Disable filter layer entirely on mobile - JavaScript already skips creation, but ensure CSS doesn't apply */
+  /* On mobile, use the ::before for simple background only (no filters) */
+  .glass::before {
+    /* Simple semi-transparent background - no filters, no special effects */
+    background-color: rgb(255 255 255 / 70%) !important;
+    /* Keep the subtle glass-like appearance with box-shadow */
+    box-shadow: 
+      inset 1px 1px 0px rgba(255, 255, 255, 0.5),
+      0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Dark mode mobile glass - Improved visibility */
+  .dark .glass::before {
+    background-color: rgba(20, 20, 25, 0.8) !important;
+    box-shadow: 
+      inset 1px 1px 0px rgba(255, 255, 255, 0.15),
+      0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Disable filter layer entirely on mobile */
   .glass-filter-layer-fixed {
     display: none !important;
     filter: none !important;
+    backdrop-filter: none !important;
     isolation: auto !important;
     will-change: auto !important;
   }
   
-  /* For glass cards in parallax on mobile, use simple backdrop-filter */
+  /* For glass cards in parallax on mobile - no filters, no effects */
   .glass-in-parallax::after,
   .parallax-element .glass::after,
   .parallax-element > .glass::after {
     filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     isolation: auto !important;
-    backdrop-filter: blur(8px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(8px) saturate(180%) !important;
+    content: none !important; /* Don't create the element */
   }
   
-  /* Remove will-change hints on mobile - they force compositing layers that conflict with WebGL */
+  /* Remove all compositing hints on mobile */
   .glass-in-parallax > *,
   .parallax-element .glass > *,
   .parallax-element > .glass > * {
@@ -110,20 +141,42 @@
     isolation: auto !important;
   }
   
-  /* Also disable isolation on glass-in-parallax itself */
   .glass-in-parallax,
   .parallax-element .glass,
   .parallax-element > .glass {
     isolation: auto !important;
+    overflow: visible !important;
+  }
+  
+  /* Simplify glass variants on mobile */
+  .glass-sm::before,
+  .glass-lg::before {
+    box-shadow: 
+      inset 1px 1px 0px rgba(255, 255, 255, 0.5),
+      0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* No hover effects on mobile (they don't work anyway) */
+  .glass-hover:hover::before {
+    background-color: rgb(255 255 255 / 70%) !important;
+  }
+  
+  .dark .glass-hover:hover::before {
+    background-color: rgba(30, 30, 35, 0.9) !important;
+    box-shadow: 
+      inset 1px 1px 0px rgba(255, 255, 255, 0.2),
+      0 3px 10px rgba(0, 0, 0, 0.5) !important;
   }
 }
 
-/* Dark mode variant */
+/* Dark mode variant - Improved visibility and contrast */
 .dark .glass::before {
   box-shadow: 
-    inset 2px 2px 0px -2px rgba(255, 255, 255, 0.1), 
-    inset 0 0 3px 1px rgba(255, 255, 255, 0.1) !important;
-  background-color: rgb(255 255 255 / 10%) !important;
+    inset 2px 2px 0px -1px rgba(255, 255, 255, 0.2), 
+    inset 0 0 4px 2px rgba(255, 255, 255, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(20, 20, 25, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Glass variants */
@@ -148,10 +201,12 @@
 }
 
 .dark .glass-hover:hover::before {
-  background-color: rgb(255 255 255 / 15%) !important;
+  background-color: rgba(30, 30, 35, 0.85) !important;
   box-shadow: 
-    inset 2px 2px 0px -2px rgba(255, 255, 255, 0.15), 
-    inset 0 0 4px 2px rgba(255, 255, 255, 0.15) !important;
+    inset 2px 2px 0px -1px rgba(255, 255, 255, 0.25), 
+    inset 0 0 6px 3px rgba(255, 255, 255, 0.2),
+    0 6px 16px rgba(0, 0, 0, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 @font-face {
