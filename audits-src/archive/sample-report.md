@@ -26,7 +26,7 @@ This document demonstrates how brand assets, fonts, and tables render on audit r
 
 **Severity:** Critical | **Status:** Open
 
-The upgrade proxy owner is hard-coded to the deployer’s externally-owned account, allowing unilateral upgrades without multisig approval.
+The upgrade proxy owner is hard-coded to the deployer's externally-owned account, allowing unilateral upgrades without multisig approval.
 
 **Recommendation:** Migrate ownership to a 2-of-3 multisig and enforce a mandatory delay via a timelock controller.
 
@@ -66,3 +66,4 @@ After remediation, the codebase meets industry standards for upgradeable ERC-20 
   **Mony Vault — Blockchain Security Research**  
   <https://monygroup.net/secure>
 </div>
+
