@@ -5,17 +5,45 @@ import ScrollReveal from "../../components/ScrollReveal";
 import CenterFocusReveal from "../../components/CenterFocusReveal";
 import ScrollIndicator from "../../components/ScrollIndicator";
 import { scrollRevealConfig, centerFocusConfig } from "../../config/parallaxConfig";
+import { promises as fs } from "fs";
+import path from "path";
 
 const CARD_MAX_WIDTH = "max-w-2xl";
 
 export const metadata = { title: "Audits" };
 
-export default function Audits() {
-  const demoAudits = [
-    { slug: "demo-audit-1", title: "Demo Audit 1" },
-    { slug: "demo-audit-2", title: "Demo Audit 2" },
-    { slug: "sample-report", title: "Sample Audit Report" },
-  ];
+async function getAudits() {
+  const auditsDir = path.join(process.cwd(), "audits-src");
+  try {
+    const files = await fs.readdir(auditsDir);
+    const auditFiles = files.filter(
+      (file) => file.endsWith(".md") && !file.startsWith(".")
+    );
+    
+    const audits = await Promise.all(
+      auditFiles.map(async (file) => {
+        const slug = file.replace(".md", "");
+        const filePath = path.join(auditsDir, file);
+        try {
+          const content = await fs.readFile(filePath, "utf8");
+          // Extract title from first H1 heading
+          const titleMatch = content.match(/^#\s+(.+)$/m);
+          const title = titleMatch ? titleMatch[1] : slug;
+          return { slug, title };
+        } catch {
+          return { slug, title: slug };
+        }
+      })
+    );
+    
+    return audits;
+  } catch {
+    return [];
+  }
+}
+
+export default async function Audits() {
+  const audits = await getAudits();
 
   return (
     <>
@@ -39,7 +67,21 @@ export default function Audits() {
       </section>
 
       {/* Audit items - one per viewport, perfectly centered, each is a scroll snap point */}
-      {demoAudits.map((audit) => (
+      {audits.length === 0 ? (
+        <section className="scroll-snap-section flex items-center justify-center min-h-screen w-full">
+          <CenterFocusReveal 
+            speed={centerFocusConfig.services.speed} 
+            delay={centerFocusConfig.services.delay}
+            visibilityThreshold={centerFocusConfig.services.visibilityThreshold}
+            className="w-full flex justify-center"
+          >
+            <GlassCard className={`p-8 rounded-lg ${CARD_MAX_WIDTH} w-full`}>
+              <p className="text-neutral-600 dark:text-neutral-300">No audits available at this time.</p>
+            </GlassCard>
+          </CenterFocusReveal>
+        </section>
+      ) : (
+        audits.map((audit) => (
         <section key={audit.slug} className="scroll-snap-section flex items-center justify-center min-h-screen w-full">
           <CenterFocusReveal 
             speed={centerFocusConfig.services.speed} 
@@ -58,7 +100,8 @@ export default function Audits() {
             </GlassCard>
           </CenterFocusReveal>
         </section>
-      ))}
+        ))
+      )}
     </>
   );
 }

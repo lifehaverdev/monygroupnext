@@ -144,7 +144,7 @@ export default function RootLayout({
         <header className="sticky top-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-gray-200 dark:border-gray-700">
           <nav className="container mx-auto flex gap-6 p-4 text-sm font-medium text-gray-700 dark:text-gray-200">
             <Link href="/" className="hover:text-primary transition-colors">Home</Link>
-            {/* <Link href="/audits">Audits</Link> */}
+            <Link href="/audits" className="hover:text-primary transition-colors">Audits</Link>
             <Link href="/about" className="hover:text-primary transition-colors">About</Link>
             <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
           </nav>
